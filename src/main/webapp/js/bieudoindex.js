@@ -40,7 +40,7 @@ $(function() {
                 }
             }]
         }
-        var chart = new ApexCharts( document.querySelector("#apex-MainCategories"),options);        
+        var chart = new ApexCharts(document.querySelector("#apex-MainCategories"), options);        
         chart.render();
     }); 
 
@@ -51,7 +51,7 @@ $(function() {
                 name: 'Available',
                 data: [20, 19, 30, 0, 14, 27, 9, 20],
             }],
-                chart: {
+            chart: {
                 height: 140,
                 type: 'line',
                 toolbar: {
@@ -90,7 +90,7 @@ $(function() {
                 type: 'gradient',
                 gradient: {
                     shade: 'dark',
-                    gradientToColors: [ "var(--chart-color3)" ],
+                    gradientToColors: ["var(--chart-color3)"],
                     shadeIntensity: 1,
                     type: 'horizontal',
                     opacityFrom: 1,
@@ -118,65 +118,64 @@ $(function() {
         chart.render();
     });  
 
-     // Hr Resorce
+    // Hr Resource
     $(document).ready(function() {
-        
-        var options = {
-            series: [{
-                name: 'sửa được',
-                data: [45, 25, 44, 23, 25, 41, 32, 25, 22, 65, 22, 29]
-            }, {
-                name: 'TOEIC 300-600',
-                data: [45, 12, 25, 22, 19, 22, 29, 23, 23, 25, 41, 32]
-            }, {
-                name: 'TOEIC 600-900',
-                data: [45, 25, 32, 25, 22, 65, 44, 23, 25, 41, 22, 29]
-            }, {
-                name: 'IELTS',
-                data: [32, 25, 22, 11, 22, 29, 16, 25, 9, 23, 25, 13]
-            },{
-                name: 'TOFEL',
-                data: [32, 25, 22, 11, 22, 29, 16, 25, 9, 23, 25, 13]
-            }],
-            chart: {
-                type: 'bar',
-                height: 300,
-                stacked: true,
-                toolbar: {
-                    show: false
-                },
-                zoom: {
-                    enabled: true
-                }
-            },
-            colors: ['var(--chart-color1)','var(--chart-color2)','var(--chart-color3)','var(--chart-color4)','var(--chart-color5)'],
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    legend: {
-                        position: 'bottom',
-                        offsetX: -10,
-                        offsetY: 0
-                    }
-                }
-            }],
-            xaxis: {
-                categories: ['Jan','Feb','March','Apr','May','Jun','July','Aug','Sept','Oct','Nov','Dec'],
-            },
-            legend: {
-                position: 'top', // top, bottom
-                horizontalAlign: 'right', // left, right
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            fill: {
-                opacity: 1
-            }
-        };
+        $.ajax({
+            url: 'http://localhost:8080/course/api/khoahoc/khoahocdaban',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.isSuccess) {
+                    var options = {
+                        series: response.data, // Use API data directly for series
+                        chart: {
+                            type: 'bar',
+                            height: 300,
+                            stacked: true,
+                            toolbar: {
+                                show: false
+                            },
+                            zoom: {
+                                enabled: true
+                            }
+                        },
+                        colors: ['var(--chart-color1)', 'var(--chart-color2)', 'var(--chart-color3)', 'var(--chart-color4)', 'var(--chart-color5)', 
+                                 'var(--chart-color6)', 'var(--chart-color7)', 'var(--chart-color8)', 'var(--chart-color9)', 'var(--chart-color10)',
+                                 'var(--chart-color11)', 'var(--chart-color12)', 'var(--chart-color13)', 'var(--chart-color14)', 'var(--chart-color15)'],
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                legend: {
+                                    position: 'bottom',
+                                    offsetX: -10,
+                                    offsetY: 0
+                                }
+                            }
+                        }],
+                        xaxis: {
+                            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'right',
+                        },
+                        dataLabels: {
+                            enabled: false,
+                        },
+                        fill: {
+                            opacity: 1
+                        }
+                    };
 
-        var chart = new ApexCharts(document.querySelector("#KhoaHocDaBan"), options);
-        chart.render();
+                    var chart = new ApexCharts(document.querySelector("#KhoaHocDaBan"), options);
+                    chart.render();
+                } else {
+                    console.error('API Error:', response.description);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+        });
     });
 });
-
