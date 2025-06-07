@@ -15,6 +15,7 @@ public class NguoiDung {
 	private String nguoidung_stk;
 	private String nguoidung_created_at;
 	private String nguoidung_updated_at;
+	private int solop_giaovien;
 
 	public int getNguoidung_id() {
 		return nguoidung_id;
@@ -126,6 +127,14 @@ public class NguoiDung {
 
 	public void setNguoidung_updated_at(String nguoidung_updated_at) {
 		this.nguoidung_updated_at = nguoidung_updated_at;
+	}
+
+	public int getSolop_giaovien() {
+		return solop_giaovien;
+	}
+
+	public void setSolop_giaovien(int solop_giaovien) {
+		this.solop_giaovien = solop_giaovien;
 	}
 
 }

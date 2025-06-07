@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import course.config.MySqlConnection;
+import course.model.GiangVienData;
 import course.model.NguoiDung;
 
 public class NguoiDungRepository {
@@ -88,5 +89,121 @@ public class NguoiDungRepository {
         return list;
     }
     
+    public List<NguoiDung> getGiaoVienTieuBieu() {
+        List<NguoiDung> list = new ArrayList<>();
+        String query = "SELECT \r\n"
+        		+ "    nd.nguoidung_id,\r\n"
+        		+ "    nd.nguoidung_hoten as hoten,\r\n"
+        		+ "    COUNT(lh.lophoc_id) as so_lophoc\r\n"
+        		+ "FROM \r\n"
+        		+ "    nguoidung nd\r\n"
+        		+ "    INNER JOIN lophoc lh ON nd.nguoidung_id = lh.lophoc_giaovien_id\r\n"
+        		+ "WHERE \r\n"
+        		+ "    nd.nguoidung_vaitro = 'Giáo viên'\r\n"
+        		+ "GROUP BY \r\n"
+        		+ "    nd.nguoidung_id,\r\n"
+        		+ "    nd.nguoidung_hoten\r\n"
+        		+ "ORDER BY \r\n"
+        		+ "    so_lophoc DESC\r\n"
+        		+ "LIMIT 7;";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            
+            
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    NguoiDung nguoiDung = new NguoiDung();
+                    nguoiDung.setNguoidung_id(resultSet.getInt("nguoidung_id"));
+                    nguoiDung.setNguoidung_hoten(resultSet.getString("hoten"));
+                    nguoiDung.setSolop_giaovien(resultSet.getInt("so_lophoc"));
+
+                    list.add(nguoiDung);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error fetching NguoiDung with {}",  e);
+        }
+
+        return list;
+    }
+    
+    
+    public List<GiangVienData> getGiangVien() {
+        List<GiangVienData> list = new ArrayList<>();
+        String query = "SELECT \r\n"
+        		+ "    CASE \r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('A1', 'A2') THEN 'Basic'\r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('B1', 'B2') THEN 'Intermediate'\r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('C1', 'C2') THEN 'Advanced'\r\n"
+        		+ "        ELSE 'Unknown'\r\n"
+        		+ "    END AS level_category,\r\n"
+        		+ "    COUNT(*) as count\r\n"
+        		+ "FROM \r\n"
+        		+ "    nguoidung\r\n"
+        		+ "WHERE nguoidung_vaitro = 'Giáo viên'\r\n"
+        		+ "GROUP BY \r\n"
+        		+ "    CASE \r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('A1', 'A2') THEN 'Basic'\r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('B1', 'B2') THEN 'Intermediate'\r\n"
+        		+ "        WHEN nguoidung_trinhdo IN ('C1', 'C2') THEN 'Advanced'\r\n"
+        		+ "        ELSE 'Unknown'\r\n"
+        		+ "    END;";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            if (connection == null) {
+                logger.error("Failed to establish database connection");
+                return list;
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String label = resultSet.getString("level_category");
+                    int value = resultSet.getInt("count");
+                    GiangVienData giangVien = new GiangVienData(label, value);
+                    list.add(giangVien);
+                }
+                if (list.isEmpty()) {
+                    logger.info("No data found for level distribution");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error fetching level distribution: {}", e.getMessage(), e);
+        }
+
+        return list;
+    }
+    
+    public int getTongSoGiangVien() {
+        int tongSoGiangVien = 0;
+        String query = "SELECT COUNT(*) as total_teachers\n"
+                + "FROM nguoidung\n"
+                + "WHERE nguoidung_vaitro = 'Giáo viên';";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            if (connection == null) {
+                logger.error("Failed to establish database connection");
+                return -1; // Trả về -1 để báo hiệu lỗi kết nối
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    tongSoGiangVien = resultSet.getInt("total_teachers");
+                } else {
+                    logger.warn("No data found for total teachers");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error fetching total teachers: {}", e.getMessage(), e);
+            return -1; // Trả về -1 nếu có lỗi SQL
+        }
+
+        return tongSoGiangVien;
+    }
     
 }

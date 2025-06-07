@@ -1,4 +1,6 @@
 <!doctype html>
+<%@page import="course.model.NguoiDung"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html class="no-js" lang="en" dir="ltr">
@@ -16,6 +18,13 @@
 	href="${pageContext.request.contextPath}/dist/assets/css/my-task.style.min.css">
 	
 </head>
+
+<%
+
+List<NguoiDung> listGiangVienTieuBieu = (List<NguoiDung>) request.getAttribute("GiangVienTieuBieu");
+int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
+
+%>
 
 <body>
 
@@ -210,7 +219,7 @@
                                     <div class="card">
                                         <div
                                             class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold">Xu hướng học viên</h6>
+                                            <h6 class="mb-0 fw-bold">THỐNG KÊ SỐ LƯỢNG LỚP HỌC ĐƯỢC TẠO</h6>
                                         </div>
                                         <div class="card-body">
                                             <div class="ac-line-transparent" id="apex-emplyoeeAnalytics"></div>
@@ -225,8 +234,8 @@
                                     <div class="card h-100">
                                         <div
                                             class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold">Tổng số giảng viên</h6>
-                                            <h4 class="mb-0 fw-bold">423</h4>
+                                            <h6 class="mb-0 fw-bold">TỔNG SỐ GIẢNG VIÊN</h6>
+                                            <h4 class="mb-0 fw-bold"><%=tongSoGiangVien %></h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="mt-3" id="apex-MainCategories"></div>
@@ -237,7 +246,7 @@
                                     <div class="card h-100">
                                         <div
                                             class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold">Lưu Lượng truy cập</h6>
+                                            <h6 class="mb-0 fw-bold">SỐ LƯỢNG KHÓA HỌC BẮT ĐẦU THEO THÁNG</h6>
                                         </div>
                                         <div class="card-body">
                                             <div id="KhoaHocDaBan"></div>
@@ -253,13 +262,13 @@
                         <!-- Giảng viên tiêu biểu -->
                         <div class="card light-danger-bg" style="overflow: hidden;">
                             <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                <h6 class="mb-0 fw-bold">Giảng viên tiêu biểu</h6>
+                                <h6 class="mb-0 fw-bold">GIẢNG VIÊN TIÊU BIỂU<h6>
                             </div>
                             <div class="card-body" style="padding: 1rem;">
                                 <div style="width: 100%; overflow: hidden; position: relative;">
                                     <div
                                         style="display: flex; gap: 1rem; animation: scroll-left 40s linear infinite; width: max-content;">
-
+										<% for (NguoiDung nguoiDung : listGiangVienTieuBieu){ %>
                                         <!-- Card 1 -->
                                         <div style="min-width: 220px; flex-shrink: 0;">
                                             <div class="card shadow">
@@ -268,102 +277,16 @@
                                                     <img class="avatar lg rounded-circle img-thumbnail mx-auto"
                                                         src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar2.jpg"
                                                         alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Luke Short</h6>
+                                                    <h6 class="fw-bold my-2 small-14"><%=nguoiDung.getNguoidung_hoten() %></h6>
                                                     <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
+                                                    <h4 class="fw-bold text-primary fs-3"><%=nguoiDung.getSolop_giaovien() %></h4>
                                                 </div>
                                             </div>
                                         </div>
+										<!-- end Card 1 -->
+										<% } %>
 
-                                        <!-- Card 2 -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar5.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">John Hard</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 3 -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar8.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Paul Rees</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 4 -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar9.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Rachel Parr</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 5 -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar12.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Eric Reid</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 6 -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar3.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Jan Ince</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Card 7 (bản sao cho loop mượt hơn) -->
-                                        <div style="min-width: 220px; flex-shrink: 0;">
-                                            <div class="card shadow">
-                                                <div
-                                                    class="card-body text-center d-flex flex-column justify-content-center">
-                                                    <img class="avatar lg rounded-circle img-thumbnail mx-auto"
-                                                        src="${pageContext.request.contextPath}/dist/assets/images/lg/avatar3.jpg"
-                                                        alt="profile">
-                                                    <h6 class="fw-bold my-2 small-14">Jan Ince</h6>
-                                                    <span class="text-muted mb-2">Số lớp học giảng dạy</span>
-                                                    <h4 class="fw-bold text-primary fs-3">10</h4>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
 
                                     </div>
                                 </div>
