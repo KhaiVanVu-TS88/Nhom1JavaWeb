@@ -19,7 +19,7 @@ import course.model.ThongKeHocVien;
 import course.payload.ResponeData;
 import course.service.NguoiDungService;
 
-@WebServlet(name = "NguoiDungApi", urlPatterns = {"/api/nguoidung/giaovien","/api/nguoidung/soluongtheongay"})
+@WebServlet(name = "NguoiDungApi", urlPatterns = {"/api/nguoidung/giaovien","/api/nguoidung/soluongtheongay", "/api/nguoidung/delete"})
 public class NguoiDungApi extends HttpServlet{
 	
 	private NguoiDungService nguoiDungService = new NguoiDungService();
@@ -36,10 +36,9 @@ public class NguoiDungApi extends HttpServlet{
 			getSoLuongNguoiDungTheoNgay(req, resp);
 			break;
 		
+		
 		}
 	}
-
-	
 
 	private void getSoLuongNguoiDungTheoNgay(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		ResponeData responeData = new ResponeData();
@@ -110,5 +109,77 @@ public class NguoiDungApi extends HttpServlet{
         printWriter.flush();
 		
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String urlPath = req.getServletPath();
+		switch(urlPath) {
+		
+		case "/api/nguoidung/delete":
+			deleteNguoiDungById(req, resp);
+			break;
+		
+		} 
+	}
+	
+	private void deleteNguoiDungById(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ResponeData responseData = new ResponeData();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        try {
+            // Lấy và kiểm tra tham số nguoidung_id
+            String nguoiDungIdParam = req.getParameter("nguoidung_id");
+            if (nguoiDungIdParam == null || nguoiDungIdParam.trim().isEmpty()) {
+                responseData.setSuccess(false);
+                responseData.setDescription("Thiếu tham số nguoidung_id");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400
+                sendResponse(resp, responseData);
+                return;
+            }
+
+            int nguoidungId;
+            try {
+                nguoidungId = Integer.parseInt(nguoiDungIdParam);
+            } catch (NumberFormatException e) {
+                responseData.setSuccess(false);
+                responseData.setDescription("nguoidung_id không hợp lệ");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400
+                sendResponse(resp, responseData);
+                return;
+            }
+
+            System.out.println("ID người dùng bị xóa là: " + nguoidungId);
+
+            // Gọi service để xóa
+            boolean isSuccess = nguoiDungService.deleteNguoiDungById(nguoidungId);
+            if (isSuccess) {
+                System.out.println("API vừa xóa người dùng có ID: " + nguoidungId);
+                responseData.setSuccess(true);
+                responseData.setDescription("Xóa người dùng thành công");
+                resp.setStatus(HttpServletResponse.SC_OK); // 200
+            } else {
+                System.out.println("Không tìm thấy người dùng với ID: " + nguoidungId);
+                responseData.setSuccess(false);
+                responseData.setDescription("Không tìm thấy người dùng với ID: " + nguoidungId);
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
+            }
+
+        } catch (Exception e) {
+            System.out.println("Lỗi khi xóa người dùng: " + e.getMessage());
+            responseData.setSuccess(false);
+            responseData.setDescription("Lỗi server: " + e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
+        }
+
+        sendResponse(resp, responseData);
+    }
+
+    private void sendResponse(HttpServletResponse resp, ResponeData responseData) throws IOException {
+        try (PrintWriter printWriter = resp.getWriter()) {
+            printWriter.print(gson.toJson(responseData));
+            printWriter.flush();
+        }
+    }
 
 }

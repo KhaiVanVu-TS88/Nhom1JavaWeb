@@ -13,12 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import course.model.LopHoc;
+import course.model.NguoiDung;
 import course.payload.ResponeData;
 import course.service.LopHocService;
+import course.service.NguoiDungService;
 
-@WebServlet(name = "LopHocApi", urlPatterns = { "/api/lophoc/delete", "/api/lophoc/hienthi", "/api/lophoc/add",  "/api/lophoc/update", "/api/lophoc/detail"})
+@WebServlet(name = "LopHocApi", urlPatterns = { "/api/lophoc/delete", "/api/lophoc/hienthi", "/api/lophoc/add",  
+		"/api/lophoc/update", "/api/lophoc/detail", "/api/lophoc/danhsachhocvien"})
 public class LopHocApi extends HttpServlet {
 	private LopHocService lopHocService = new LopHocService();
+	private NguoiDungService nguoiDungService = new NguoiDungService();
 	private Gson gson = new Gson();
 
 	@Override
@@ -32,9 +36,50 @@ public class LopHocApi extends HttpServlet {
 		case "/api/lophoc/detail":
 			detailLopHoc(req,resp);
 			break;
+		case "/api/lophoc/danhsachhocvien":
+			getHocVienTheoLopHocId(req, resp);
+			break;
 		}
 	}
 	
+	private void getHocVienTheoLopHocId(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		ResponeData responeData = new ResponeData();
+
+		// Lấy tham số khoahoc_id
+		String lophocId = req.getParameter("lophoc_id");
+		System.out.println("hiển thị danh sách học viên trong lớp học có id: " + lophocId);
+		if (lophocId == null || lophocId.trim().isEmpty()) {
+			responeData.setSuccess(false);
+			responeData.setDescription("Thiếu tham số ID lớp học");
+			responeData.setData("");
+			sendResponse(resp, responeData);
+			return;
+		}
+
+		// Chuyển đổi khoahoc_id sang số nguyên
+		int lophoc_id;
+		try {
+			lophoc_id = Integer.parseInt(lophocId);
+			System.out.println("hiển thị danh sách học viên lớp học có id: " + lophoc_id);
+		} catch (NumberFormatException e) {
+			responeData.setSuccess(false);
+			responeData.setDescription("danh sach hoc vien theo lớp học co ID khong hop le");
+			responeData.setData("");
+			sendResponse(resp, responeData);
+			return;
+		}
+
+		// Lấy danh sách lớp học
+		List<NguoiDung> hocVien = nguoiDungService.getHocVienTheoLopHocId(lophoc_id);
+		responeData.setSuccess(true);
+		responeData.setDescription(
+				hocVien.isEmpty() ? "Không tìm thấy danh sach hoc vien theo lớp học" : "Lấy danh sach hoc vien theo lớp học");
+		responeData.setData(hocVien);
+
+		sendResponse(resp, responeData);
+		
+	}
+
 	private void hienThiLopHocTrongKhoahoc(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		ResponeData responeData = new ResponeData();
 

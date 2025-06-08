@@ -194,7 +194,7 @@ $(function() {
 	$(document).ready(function() {
 		var options = {
 			chart: {
-				height: 500, // Tăng chiều cao để hiển thị 12 khóa học
+				height: 500, // Tăng chiều cao để hiển thị nhiều khóa học
 				type: 'rangeBar',
 				toolbar: {
 					show: false,
@@ -210,7 +210,7 @@ $(function() {
 			colors: ['#2c3e50', '#e74c3c', '#3498db', '#f1c40f', 
 			'#9b59b6', '#1abc9c', '#e67e22', '#8e44ad', '#27ae60', 
 			'#d35400', '#34495e', '#c0392b', '#16a085', '#f39c12', '#6c5ce7', 
-			'#7f8c8d', '#e84393', '#2980b9', '#95a5a6', '#bdc3c7'], // 12 màu khác nhau
+			'#7f8c8d', '#e84393', '#2980b9', '#95a5a6', '#bdc3c7'], // 20 màu khác nhau
 
 			series: [], // Sẽ được điền động từ API
 			yaxis: {

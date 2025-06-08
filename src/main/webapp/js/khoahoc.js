@@ -198,7 +198,7 @@ $(document).ready(function() {
 	$(document).on('click', '.btn-hienthi-danhsachlophoc', function() {
 		var khoahocId = $(this).data('id-khoahoc');
 
-		var tableBody = $('#patient-table tbody');
+		var tableBody = $('#lophoc-tbody');
 		tableBody.empty(); // Xóa các hàng hiện tại
 
 		// Kiểm tra khoahocId
@@ -257,7 +257,7 @@ $(document).ready(function() {
                                 <td><span class="badge ${badgeClass}">${lopHoc.lophoc_trangthai || 'Chưa xác định'}</span></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#readclass" data-lophoc-id="${lopHoc.lophoc_id}">
+                                        <button type="button" class="btn btn-outline-secondary btn-hienthi-danhsachhocvien" data-bs-toggle="modal" data-bs-target="#readclass" data-lophoc-id="${lopHoc.lophoc_id}">
                                             <i class="icofont-eye text-success"></i>
                                         </button>
                                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editLopHoc" data-khoahoc-id="${khoahocId}" data-lophoc-id="${lopHoc.lophoc_id}">
@@ -310,6 +310,7 @@ $(document).ready(function() {
 
 
 	});
+
 	//thêm lớp học
 	$('#btn-add-lophoc').off('click').on('click', function(e) {
 		e.preventDefault();
@@ -448,6 +449,96 @@ $(document).ready(function() {
 		} else {
 			console.log('Hủy Cập nhật lớp học');
 		}
+	});
+
+//Hiển thị danh sách học viên trong một lớp học
+	$(document).on('click', '.btn-hienthi-danhsachhocvien', function() {
+		var lophocId = $(this).data('lophoc-id');
+		var tableBody = $('#danhsachhocvien-tbody');
+		tableBody.empty(); // Xóa các hàng hiện tại
+
+		// Kiểm tra lophocId
+		if (!lophocId) {
+			alert('ID lớp học không hợp lệ');
+			tableBody.html('<tr><td colspan="6">ID lớp học không hợp lệ</td></tr>');
+			return;
+		}
+
+		$.ajax({
+			method: 'GET',
+			url: 'http://localhost:8080/course/api/lophoc/danhsachhocvien',
+			data: { lophoc_id: lophocId },
+			dataType: 'json'
+		})
+			.done(function(responseData) {
+				if (responseData?.isSuccess && Array.isArray(responseData.data)) {
+					if (responseData.data.length === 0) {
+						tableBody.html('<tr><td colspan="6">Không có học viên nào</td></tr>');
+						return;
+					}
+
+					responseData.data.forEach(function(hocVien) {
+						// Xác định class cho badge trạng thái
+						let badgeClass = 'bg-info';
+						if (hocVien.nguoidung_trangthai === 'Đang học') badgeClass = 'bg-success';
+						else if (hocVien.nguoidung_trangthai === 'Tạm dừng') badgeClass = 'bg-warning';
+						else if (hocVien.nguoidung_trangthai === 'Đã hoàn thành') badgeClass = 'bg-danger';
+						else if (hocVien.nguoidung_trangthai === 'Đã đăng ký') badgeClass = 'bg-primary';
+						else if (hocVien.nguoidung_trangthai === 'Đã thanh toán') badgeClass = 'bg-secondary';
+						else if (hocVien.nguoidung_trangthai === 'Đã hủy') badgeClass = 'bg-dark';
+
+						// Tạo hàng bảng
+						const row = `
+                    <tr>
+                        <td>${hocVien.nguoidung_id || ''}</td>
+                        <td>${hocVien.nguoidung_hoten || ''}</td>
+                        <td>${hocVien.diemso_hocvien || ''}</td>
+                        <td>${hocVien.ngaydangky_lophoc || ''}</td>
+                        <td><span class="badge ${badgeClass}">${hocVien.nguoidung_trangthai || 'Chưa xác định'}</span></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                
+                                <button type="button" class="btn btn-outline-secondary btn-xoa-hocvien" data-hocvien-id="${hocVien.nguoidung_id}">
+                                    <i class="icofont-ui-delete text-danger"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+						tableBody.append(row);
+					});
+
+					// Thêm sự kiện xóa học viên
+					$('.btn-xoa-hocvien').off('click').on('click', function() {
+						const hocvienId = $(this).data('hocvien-id');
+						if (confirm('Bạn có chắc chắn muốn xóa học viên này?')) {
+							$.ajax({
+								method: 'POST',
+								url: 'http://localhost:8080/course/api/nguoidung/delete',
+								data: { nguoidung_id: hocvienId },
+								dataType: 'json'
+							})
+								.done(function(response) {
+									if (response.isSuccess) {
+										alert('Xóa học viên thành công');
+										$(`button[data-hocvien-id="${hocvienId}"]`).closest('tr').remove();
+									} else {
+										alert('Xóa học viên thất bại: ' + (response.description || 'Lỗi không xác định'));
+									}
+								})
+								.fail(function(jqXHR, textStatus, errorThrown) {
+									alert('Lỗi khi gửi yêu cầu xóa: ' + textStatus + ' - ' + errorThrown);
+								});
+						}
+					});
+				} else {
+					alert('Lấy danh sách học viên thất bại: ' + (responseData?.description || 'Lỗi không xác định'));
+					tableBody.html('<tr><td colspan="6">Không thể tải danh sách học viên</td></tr>');
+				}
+			})
+			.fail(function(jqXHR, textStatus, errorThrown) {
+				alert('Lỗi khi gửi yêu cầu: ' + textStatus + ' - ' + errorThrown);
+				tableBody.html('<tr><td colspan="6">Không thể tải danh sách học viên</td></tr>');
+			});
 	});
 
 

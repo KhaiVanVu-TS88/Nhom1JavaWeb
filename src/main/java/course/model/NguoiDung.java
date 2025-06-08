@@ -16,6 +16,8 @@ public class NguoiDung {
 	private String nguoidung_created_at;
 	private String nguoidung_updated_at;
 	private int solop_giaovien;
+	private String ngaydangky_lophoc;
+	private float diemso_hocvien;
 
 	public int getNguoidung_id() {
 		return nguoidung_id;
@@ -137,4 +139,21 @@ public class NguoiDung {
 		this.solop_giaovien = solop_giaovien;
 	}
 
+	public String getNgaydangky_lophoc() {
+		return ngaydangky_lophoc;
+	}
+
+	public void setNgaydangky_lophoc(String ngaydangky_lophoc) {
+		this.ngaydangky_lophoc = ngaydangky_lophoc;
+	}
+
+	public float getDiemso_hocvien() {
+		return diemso_hocvien;
+	}
+
+	public void setDiemso_hocvien(float diemso_hocvien) {
+		this.diemso_hocvien = diemso_hocvien;
+	}
+
+	
 }

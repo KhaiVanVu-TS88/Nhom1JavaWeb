@@ -937,7 +937,7 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 				</div>
 			</div>
 
-
+<!-- readlophoc -->
 			<div class="modal fade" id="readLopHoc" tabindex="-1"
 				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-xl ">
@@ -970,7 +970,7 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 												<th>Hoạt động</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="lophoc-tbody">
 											<!--  -->
 										</tbody>
 									</table>
@@ -994,14 +994,14 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 	</div>
 
 
-	<!-- Modal  Read class Folder/ File-->
+	<!-- Modal  Read class-->
+	
 	<div class="modal fade" id="readclass" tabindex="-1" aria-hidden="true">
 		<div
 			class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title  fw-bold" id="readclassLabel">Danh sách
-						sinh viên lớp +"tên lớp"</h5>
+					<h5 class="modal-title  fw-bold" id="readclassLabel">Danh sách học viên trong lớp</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 
@@ -1009,15 +1009,10 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 
 				<div class="modal-body justify-content-center flex-column d-flex">
 					<div class="card mb-3">
-						<div class="card-header py-3  bg-transparent border-bottom-0">
-							<h6 class="mb-0 fw-bold ">Datatable</h6>
-							<div class="text-end">
-								<button type="button" class="btn btn-dark w-sm-100"
-									data-bs-toggle="modal" data-bs-target="#createstudent">
-									<i class="icofont-plus-circle me-2 fs-6"></i>Thêm lớp học
-								</button>
-							</div>
-						</div>
+						<!--  <div class="card-header py-3  bg-transparent border-bottom-0">
+							<h6 class="mb-0 fw-bold ">Danh sách sinh viên trong lớp</h6>
+							
+						</div>-->
 						<div class="card-body">
 							<table id="patient-table"
 								class="table table-hover align-middle mb-0" style="width: 100%;">
@@ -1026,224 +1021,29 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 										<th>Id sinh viên</th>
 										<th>Họ tên</th>
 										<th>Điểm số</th>
-										<th>Đánh giá</th>
 										<th>Ngày đăng ký</th>
-										<!-- <th>Ngày kết thúc</th> -->
-										<th>Tiến độ</th>
 										<th>Trạng thái</th>
 										<th>Hoạt động</th>
 									</tr>
 								</thead>
-								<tbody>
-									<!-- start danh sach sinh vien trong lop -->
-									<tr>
-										<td>ST-0001</td>
-										<td><img
-											src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar3.jpg"
-											class="avatar sm rounded-circle me-2" alt="profile-image"><span>Molly
-										</span></td>
-										<td>45</td>
-										<td>70 Bowman St. South Windsor, CT 06074</td>
-										<td>May 13, 2021</td>
-										<!-- <td>May 16, 2021</td> -->
-										<td>
-											<div class="progress" style="height: 3px;">
-												<div class="progress-bar progress-bar-warning"
-													role="progressbar" aria-valuenow="40" aria-valuemin="0"
-													aria-valuemax="100" style="width: 40%;">
-													<span class="sr-only">40% Complete</span>
-												</div>
-											</div>
-										</td>
-										<td><span class="badge bg-info">Đang diễn ra</span></td>
-
-										<td>
-											<div class="btn-group" role="group"
-												aria-label="Basic outlined example">
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-eye text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-edit text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#deletestudent">
-													<i class="icofont-ui-delete text-danger"></i>
-												</button>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>ST-0011</td>
-										<td><img
-											src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar1.jpg"
-											class="avatar sm rounded-circle me-2" alt="profile-image"><span>Brian</span></td>
-										<td>35</td>
-										<td>123 6th St. Melbourne, FL 32904</td>
-										<td>May 13, 2021</td>
-										<!-- <td>May 22, 2021</td> -->
-										<td>
-											<div class="progress" style="height: 3px;">
-												<div class="progress-bar bg-success" role="progressbar"
-													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-													style="width: 100%;">
-													<span class="sr-only">100% Complete</span>
-												</div>
-											</div>
-										</td>
-										<td><span class="badge bg-success">Hoàn thành</span></td>
-										<td>
-											<div class="btn-group" role="group"
-												aria-label="Basic outlined example">
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-eye text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-edit text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#deletestudent">
-													<i class="icofont-ui-delete text-danger"></i>
-												</button>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>ST-0045</td>
-										<td><img
-											src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar2.jpg"
-											class="avatar sm rounded-circle me-2" alt="profile-image"><span>Julia</span></td>
-										<td>42</td>
-										<td>4 Shirley Ave. West Chicago, IL 60185</td>
-										<td>May 17, 2021</td>
-										<!-- <td>May 16, 2021</td> -->
-										<td>
-											<div class="progress" style="height: 3px;">
-												<div class="progress-bar bg-success" role="progressbar"
-													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-													style="width: 100%;">
-													<span class="sr-only">100% Complete</span>
-												</div>
-											</div>
-										</td>
-										<td><span class="badge bg-success">Hoàn thành</span></td>
-										<td>
-											<div class="btn-group" role="group"
-												aria-label="Basic outlined example">
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-eye text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-edit text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#deletestudent">
-													<i class="icofont-ui-delete text-danger"></i>
-												</button>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>ST-0030</td>
-										<td><img
-											src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar4.jpg"
-											class="avatar sm rounded-circle me-2" alt="profile-image"><span>Sonia</span></td>
-										<td>25</td>
-										<td>123 6th St. Melbourne, FL 32904</td>
-										<td>May 13, 2021</td>
-										<!-- <td>May 23, 2021</td> -->
-										<td>
-											<div class="progress" style="height: 3px;">
-												<div class="progress-bar bg-info" role="progressbar"
-													aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-													style="width: 15%;">
-													<span class="sr-only">15% Complete</span>
-												</div>
-											</div>
-										</td>
-										<td><span class="badge bg-info">Đang diễn ra</span></td>
-
-										<td>
-											<div class="btn-group" role="group"
-												aria-label="Basic outlined example">
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-eye text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-edit text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#deletestudent">
-													<i class="icofont-ui-delete text-danger"></i>
-												</button>
-											</div>
-										</td>
-
-									</tr>
-									<tr>
-										<td>ST-0078</td>
-										<td><img
-											src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar5.jpg"
-											class="avatar sm rounded-circle me-2" alt="profile-image"><span>Adam
-												H</span></td>
-										<td>18</td>
-										<td>4 Shirley Ave. West Chicago, IL 60185</td>
-										<td>May 18, 2021</td>
-										<!-- <td>May 18, 2021</td> -->
-										<td>
-											<div class="progress" style="height: 3px;">
-												<div class="progress-bar bg-danger" role="progressbar"
-													aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"
-													style="width: 85%;">
-													<span class="sr-only">85% Complete</span>
-												</div>
-											</div>
-										</td>
-										<td><span class="badge bg-danger">Đang diễn ra</span></td>
-
-										<td>
-											<div class="btn-group" role="group"
-												aria-label="Basic outlined example">
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-eye text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#">
-													<i class="icofont-edit text-success"></i>
-												</button>
-												<button type="button" class="btn btn-outline-secondary"
-													data-bs-toggle="modal" data-bs-target="#deletestudent">
-													<i class="icofont-ui-delete text-danger"></i>
-												</button>
-											</div>
-										</td>
-
-									</tr>
-
+								<tbody id="danhsachhocvien-tbody">
+									<!-- start 1 sinh vien trong lop 
+									
+									 end 1 sinh vien trong lop -->
 									<!-- end danh sach  sinh vien trong lop -->
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Thoát</button>
-					<!-- <button type="button" class="btn btn-danger color-fff">Thêm</button> -->
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- end  Read class Folder/ File-->
 
 	<!-- Create Class-->
 	<!-- Create Class-->

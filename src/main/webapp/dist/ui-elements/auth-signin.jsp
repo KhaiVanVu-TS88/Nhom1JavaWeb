@@ -58,7 +58,7 @@
                                             Đăng nhập với Google
                                         </span>
                                     </a>
-                                    <span class="dividers text-muted mt-4">OR</span>
+                                    <span class="dividers text-muted mt-4">HOẶC</span>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-2">
@@ -71,7 +71,7 @@
                                         <div class="form-label">
                                             <span class="d-flex justify-content-between align-items-center">
                                                 Mật khẩu
-                                                <a class="text-secondary" href="auth-password-reset.html">Forgot Password?</a>
+                                                <a class="text-secondary" href="auth-password-reset.html">Quên mật khẩu?</a>
                                             </span>
                                         </div>
                                         <input type="password" name ="password" class="form-control form-control-lg" placeholder="***************" >

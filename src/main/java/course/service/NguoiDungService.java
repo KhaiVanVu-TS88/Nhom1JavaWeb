@@ -35,4 +35,12 @@ public class NguoiDungService {
 	public ThongKeHocVien getThongKeHocVien() {
 		return nguoiDungRepository.getThongKeHocVien();
 	}
+	
+	public List<NguoiDung> getHocVienTheoLopHocId(int lophoc_id){
+		return nguoiDungRepository.getHocVienTheoLopHocId(lophoc_id);
+	}
+	
+	public boolean deleteNguoiDungById(int nguoidung_id) {
+		return nguoiDungRepository.deleteNguoiDungById(nguoidung_id) > 0 ? true : false;
+	}
 }
