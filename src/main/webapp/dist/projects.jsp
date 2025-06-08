@@ -375,8 +375,12 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 											data-bs-toggle="tab" href="#Approval-list" role="tab">Chờ
 												phê duyệt</a></li>
 										<li class="nav-item"><a class="nav-link"
+											data-bs-toggle="tab" href="#pause-list" role="tab">Tạm dừng</a></li>
+										<li class="nav-item"><a class="nav-link"
 											data-bs-toggle="tab" href="#Completed-list" role="tab">Hoàn
 												thành</a></li>
+												
+												
 									</ul>
 								</div>
 							</div>
@@ -387,6 +391,7 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 					<div class="row align-items-center">
 						<div class="col-lg-12 col-md-12 flex-column">
 							<div class="tab-content mt-4">
+							
 								<div class="tab-pane fade show active" id="All-list">
 									<div class="row g-3 gy-5 py-3 row-deck">
 
@@ -498,30 +503,472 @@ List<NguoiDung> listNguoiDung = (List<NguoiDung>) request.getAttribute("NguoiDun
 										%>
 									</div>
 								</div>
+								
 								<div class="tab-pane fade" id="Started-list">
 									<div class="row g-3 gy-5 py-3 row-deck">
-										<div>
-											<p>Started-list</p>
+										
+											
+											<%
+										for (KhoaHoc khoaHoc : list) {
+										%>
+										<% if (khoaHoc.getKhoahoc_trangthai().equals("Đang mở")) { %>
+										<!-- start card -->
+										<div
+											class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 card-khoahoc">
+											<div class="card">
+												<div class="card-body">
+													<div
+														class="d-flex align-items-center justify-content-between mt-5">
+														<div class="lesson_name">
+															<div class="project-block light-info-bg">
+																<i class="icofont-book-alt"></i>
+															</div>
+															<h6 class="mb-0 fw-bold  fs-6  mb-2"><%=khoaHoc.getKhoahoc_ten()%></h6>
+														</div>
+														<div class="btn-group" role="group"
+															aria-label="Basic outlined example">
+															<button type="button"
+																class="btn btn-outline-secondary btn-hienthi-danhsachlophoc"
+																data-bs-toggle="modal"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-target="#readLopHoc">
+																<i class="icofont-eye text-success"></i>
+															</button>
+															<button type="button" class="btn btn-outline-secondary"
+																data-bs-toggle="modal" data-bs-target="#editKhoaHoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>">
+																<i class="icofont-edit text-success"></i>
+															</button>
+															<button type="button"
+																class="btn btn-outline-secondary btn-xoa-khoahoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-toggle="modal">
+
+																<i class="icofont-ui-delete text-danger"></i>
+															</button>
+														</div>
+													</div>
+													<div class="d-flex align-items-center">
+														<div class="avatar-list avatar-list-stacked pt-2">
+															<img class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar2.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar1.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar3.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar4.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar8.jpg" alt=""> <span
+																class="avatar rounded-circle text-center pointer sm"
+																data-bs-toggle="modal" data-bs-target="#addUser"><i
+																class="icofont-ui-add"></i></span>
+														</div>
+													</div>
+													<div class="row g-2 pt-4">
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-paper-clip"></i> <span class="ms-2">5
+																	Attach</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-sand-clock"></i> <span class="ms-2">4
+																	Month</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-group-students "></i> <span
+																	class="ms-2">Giảng viên</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-ui-text-chat"></i> <span class="ms-2">10</span>
+															</div>
+														</div>
+													</div>
+													<div class="dividers-block"></div>
+													<div
+														class="d-flex align-items-center justify-content-between mb-2">
+														<h4 class="small fw-bold mb-0">Progress</h4>
+														<span class="small light-danger-bg  p-1 rounded"><i
+															class="icofont-ui-clock"></i> 35 Days Left</span>
+													</div>
+													<div class="progress" style="height: 8px;">
+														<div class="progress-bar bg-secondary" role="progressbar"
+															style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+															aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 25%" aria-valuenow="30"
+															aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 10%" aria-valuenow="10"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
 										</div>
+										<!-- end card -->
+										<%
+										}
+										%>
+										<%
+										}
+										%>
+										
 
 									</div>
 								</div>
 								<div class="tab-pane fade" id="Approval-list">
 									<div class="row g-3 gy-5 py-3 row-deck">
-										<div>
-											<p>Approval-list</p>
+										<%
+										for (KhoaHoc khoaHoc : list) {
+										%>
+										<% if (khoaHoc.getKhoahoc_trangthai().equals("Sắp mở")) { %>
+										<!-- start card -->
+										<div
+											class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 card-khoahoc">
+											<div class="card">
+												<div class="card-body">
+													<div
+														class="d-flex align-items-center justify-content-between mt-5">
+														<div class="lesson_name">
+															<div class="project-block light-info-bg">
+																<i class="icofont-book-alt"></i>
+															</div>
+															<h6 class="mb-0 fw-bold  fs-6  mb-2"><%=khoaHoc.getKhoahoc_ten()%></h6>
+														</div>
+														<div class="btn-group" role="group"
+															aria-label="Basic outlined example">
+															<button type="button"
+																class="btn btn-outline-secondary btn-hienthi-danhsachlophoc"
+																data-bs-toggle="modal"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-target="#readLopHoc">
+																<i class="icofont-eye text-success"></i>
+															</button>
+															<button type="button" class="btn btn-outline-secondary"
+																data-bs-toggle="modal" data-bs-target="#editKhoaHoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>">
+																<i class="icofont-edit text-success"></i>
+															</button>
+															<button type="button"
+																class="btn btn-outline-secondary btn-xoa-khoahoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-toggle="modal">
+
+																<i class="icofont-ui-delete text-danger"></i>
+															</button>
+														</div>
+													</div>
+													<div class="d-flex align-items-center">
+														<div class="avatar-list avatar-list-stacked pt-2">
+															<img class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar2.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar1.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar3.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar4.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar8.jpg" alt=""> <span
+																class="avatar rounded-circle text-center pointer sm"
+																data-bs-toggle="modal" data-bs-target="#addUser"><i
+																class="icofont-ui-add"></i></span>
+														</div>
+													</div>
+													<div class="row g-2 pt-4">
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-paper-clip"></i> <span class="ms-2">5
+																	Attach</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-sand-clock"></i> <span class="ms-2">4
+																	Month</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-group-students "></i> <span
+																	class="ms-2">Giảng viên</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-ui-text-chat"></i> <span class="ms-2">10</span>
+															</div>
+														</div>
+													</div>
+													<div class="dividers-block"></div>
+													<div
+														class="d-flex align-items-center justify-content-between mb-2">
+														<h4 class="small fw-bold mb-0">Progress</h4>
+														<span class="small light-danger-bg  p-1 rounded"><i
+															class="icofont-ui-clock"></i> 35 Days Left</span>
+													</div>
+													<div class="progress" style="height: 8px;">
+														<div class="progress-bar bg-secondary" role="progressbar"
+															style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+															aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 25%" aria-valuenow="30"
+															aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 10%" aria-valuenow="10"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
 										</div>
+										<!-- end card -->
+										<%
+										}
+										%>
+										<%
+										}
+										%>
 
 									</div>
 								</div>
 								<div class="tab-pane fade" id="Completed-list">
 									<div class="row g-3 gy-5 py-3 row-deck">
-										<div>
-											<p>Completed-list</p>
+										<%
+										for (KhoaHoc khoaHoc : list) {
+										%>
+										<% if (khoaHoc.getKhoahoc_trangthai().equals("Đóng")) { %>
+										<!-- start card -->
+										<div
+											class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 card-khoahoc">
+											<div class="card">
+												<div class="card-body">
+													<div
+														class="d-flex align-items-center justify-content-between mt-5">
+														<div class="lesson_name">
+															<div class="project-block light-info-bg">
+																<i class="icofont-book-alt"></i>
+															</div>
+															<h6 class="mb-0 fw-bold  fs-6  mb-2"><%=khoaHoc.getKhoahoc_ten()%></h6>
+														</div>
+														<div class="btn-group" role="group"
+															aria-label="Basic outlined example">
+															<button type="button"
+																class="btn btn-outline-secondary btn-hienthi-danhsachlophoc"
+																data-bs-toggle="modal"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-target="#readLopHoc">
+																<i class="icofont-eye text-success"></i>
+															</button>
+															<button type="button" class="btn btn-outline-secondary"
+																data-bs-toggle="modal" data-bs-target="#editKhoaHoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>">
+																<i class="icofont-edit text-success"></i>
+															</button>
+															<button type="button"
+																class="btn btn-outline-secondary btn-xoa-khoahoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-toggle="modal">
+
+																<i class="icofont-ui-delete text-danger"></i>
+															</button>
+														</div>
+													</div>
+													<div class="d-flex align-items-center">
+														<div class="avatar-list avatar-list-stacked pt-2">
+															<img class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar2.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar1.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar3.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar4.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar8.jpg" alt=""> <span
+																class="avatar rounded-circle text-center pointer sm"
+																data-bs-toggle="modal" data-bs-target="#addUser"><i
+																class="icofont-ui-add"></i></span>
+														</div>
+													</div>
+													<div class="row g-2 pt-4">
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-paper-clip"></i> <span class="ms-2">5
+																	Attach</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-sand-clock"></i> <span class="ms-2">4
+																	Month</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-group-students "></i> <span
+																	class="ms-2">Giảng viên</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-ui-text-chat"></i> <span class="ms-2">10</span>
+															</div>
+														</div>
+													</div>
+													<div class="dividers-block"></div>
+													<div
+														class="d-flex align-items-center justify-content-between mb-2">
+														<h4 class="small fw-bold mb-0">Progress</h4>
+														<span class="small light-danger-bg  p-1 rounded"><i
+															class="icofont-ui-clock"></i> 35 Days Left</span>
+													</div>
+													<div class="progress" style="height: 8px;">
+														<div class="progress-bar bg-secondary" role="progressbar"
+															style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+															aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 25%" aria-valuenow="30"
+															aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 10%" aria-valuenow="10"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
 										</div>
+										<!-- end card -->
+										<%
+										}
+										%>
+										<%
+										}
+										%>
 
 									</div>
 								</div>
+								
+								<div class="tab-pane fade" id="pause-list">
+									<div class="row g-3 gy-5 py-3 row-deck">
+										<%
+										for (KhoaHoc khoaHoc : list) {
+										%>
+										<% if (khoaHoc.getKhoahoc_trangthai().equals("Tạm dừng")) { %>
+										<!-- start card -->
+										<div
+											class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 card-khoahoc">
+											<div class="card">
+												<div class="card-body">
+													<div
+														class="d-flex align-items-center justify-content-between mt-5">
+														<div class="lesson_name">
+															<div class="project-block light-info-bg">
+																<i class="icofont-book-alt"></i>
+															</div>
+															<h6 class="mb-0 fw-bold  fs-6  mb-2"><%=khoaHoc.getKhoahoc_ten()%></h6>
+														</div>
+														<div class="btn-group" role="group"
+															aria-label="Basic outlined example">
+															<button type="button"
+																class="btn btn-outline-secondary btn-hienthi-danhsachlophoc"
+																data-bs-toggle="modal"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-target="#readLopHoc">
+																<i class="icofont-eye text-success"></i>
+															</button>
+															<button type="button" class="btn btn-outline-secondary"
+																data-bs-toggle="modal" data-bs-target="#editKhoaHoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>">
+																<i class="icofont-edit text-success"></i>
+															</button>
+															<button type="button"
+																class="btn btn-outline-secondary btn-xoa-khoahoc"
+																data-id-khoahoc="<%=khoaHoc.getKhoahoc_id()%>"
+																data-bs-toggle="modal">
+
+																<i class="icofont-ui-delete text-danger"></i>
+															</button>
+														</div>
+													</div>
+													<div class="d-flex align-items-center">
+														<div class="avatar-list avatar-list-stacked pt-2">
+															<img class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar2.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar1.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar3.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar4.jpg" alt=""> <img
+																class="avatar rounded-circle sm"
+																src="assets/images/xs/avatar8.jpg" alt=""> <span
+																class="avatar rounded-circle text-center pointer sm"
+																data-bs-toggle="modal" data-bs-target="#addUser"><i
+																class="icofont-ui-add"></i></span>
+														</div>
+													</div>
+													<div class="row g-2 pt-4">
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-paper-clip"></i> <span class="ms-2">5
+																	Attach</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-sand-clock"></i> <span class="ms-2">4
+																	Month</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-group-students "></i> <span
+																	class="ms-2">Giảng viên</span>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="d-flex align-items-center">
+																<i class="icofont-ui-text-chat"></i> <span class="ms-2">10</span>
+															</div>
+														</div>
+													</div>
+													<div class="dividers-block"></div>
+													<div
+														class="d-flex align-items-center justify-content-between mb-2">
+														<h4 class="small fw-bold mb-0">Progress</h4>
+														<span class="small light-danger-bg  p-1 rounded"><i
+															class="icofont-ui-clock"></i> 35 Days Left</span>
+													</div>
+													<div class="progress" style="height: 8px;">
+														<div class="progress-bar bg-secondary" role="progressbar"
+															style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+															aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 25%" aria-valuenow="30"
+															aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress-bar bg-secondary ms-1"
+															role="progressbar" style="width: 10%" aria-valuenow="10"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<%
+										}
+										%>
+										<%
+										}
+										%>
+
+									</div>
+								</div>
+								
 							</div>
 						</div>
 					</div>
