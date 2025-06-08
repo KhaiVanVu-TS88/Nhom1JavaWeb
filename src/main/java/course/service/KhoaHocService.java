@@ -6,6 +6,7 @@ import java.util.List;
 
 import course.model.KhoaHoc;
 import course.model.KhoaHocDaBan;
+import course.model.ThongKeDoanhThuKhoaHoc;
 import course.repository.KhoaHocRepository;
 
 public class KhoaHocService {
@@ -56,5 +57,13 @@ public class KhoaHocService {
 	
 	public List<KhoaHocDaBan> getKhoaHocDaBanTheoThang(){
 		return khoaHocRepository.getKhoaHocDaBanTheoThang();
+	}
+	
+	public List<ThongKeDoanhThuKhoaHoc> getDoanhThuKhoaHoc(){
+		return khoaHocRepository.getDoanhThuKhoaHoc();
+	}
+	
+	public List<KhoaHoc> getTimeLineKhoaHoc(){
+		return khoaHocRepository.getTimeLineKhoaHoc();
 	}
 }

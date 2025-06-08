@@ -219,10 +219,10 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
                                     <div class="card">
                                         <div
                                             class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold">THỐNG KÊ SỐ LƯỢNG LỚP HỌC ĐƯỢC TẠO</h6>
+                                            <h6 class="mb-0 fw-bold">SỐ LƯỢNG NGƯỜI DÙNG ĐĂNG KÝ THEO NGÀY</h6>
                                         </div>
                                         <div class="card-body">
-                                            <div class="ac-line-transparent" id="apex-emplyoeeAnalytics"></div>
+                                            <div class="ac-line-transparent" id="soluongnguoidungtheongay"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -333,6 +333,7 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
 	<script src="${pageContext.request.contextPath}/js/page/hr.js"></script>
 	-->
 	<script src="${pageContext.request.contextPath}/js/bieudoindex.js"></script>
+	<script src="${pageContext.request.contextPath}/js/lophoc.js"></script>
 </body>
 
 </html>

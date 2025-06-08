@@ -16,10 +16,12 @@ import com.google.gson.Gson;
 
 import course.model.KhoaHoc;
 import course.model.KhoaHocDaBan;
+import course.model.ThongKeDoanhThuKhoaHoc;
 import course.payload.ResponeData;
 import course.service.KhoaHocService;
 
-@WebServlet(name = "KhoaHocApi", urlPatterns = { "/api/khoahoc/delete", "/api/khoahoc/add", "/api/khoahoc/update", "/api/khoahoc/detail", "/api/khoahoc/khoahocdaban" })
+@WebServlet(name = "KhoaHocApi", urlPatterns = { "/api/khoahoc/delete", "/api/khoahoc/add", "/api/khoahoc/update",
+		"/api/khoahoc/detail", "/api/khoahoc/khoahocdaban", "/api/khoahoc/doanhthu", "/api/khoahoc/timeline" })
 public class KhoaHocApi extends HttpServlet {
 
 	private KhoaHocService khoaHocService = new KhoaHocService();
@@ -36,9 +38,85 @@ public class KhoaHocApi extends HttpServlet {
 		case "/api/khoahoc/khoahocdaban":
 			khoaHocDaBan(req, resp);
 			break;
+		case "/api/khoahoc/doanhthu":
+			doanhThuKhoaHoc(req,resp);
+			break;
+		case "/api/khoahoc/timeline":
+			getTimeLineKhoaHoc(req, resp);
+			break;
 		}
 	}
 	
+	private void getTimeLineKhoaHoc(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		ResponeData responeData = new ResponeData();
+
+        try {
+            // Lấy dữ liệu từ service <- repository
+            List<KhoaHoc> timelineKhoaHoc = khoaHocService.getTimeLineKhoaHoc();
+
+            if (!timelineKhoaHoc.isEmpty()) {
+                responeData.setSuccess(true);
+                responeData.setDescription("Lấy dữ liệu biểu đồ timelineKhoaHoc thành công");
+                responeData.setData(timelineKhoaHoc);
+                System.out.println("API /api/chart-data lấy được dữ liệu biểu đồ timelineKhoaHoc");
+            } else {
+                responeData.setSuccess(false);
+                responeData.setDescription("Không tìm thấy dữ liệu biểu đồ timelineKhoaHoc");
+                System.out.println("API /api/chart-data không tìm thấy dữ liệu biểu đồ timelineKhoaHoc");
+            }
+        } catch (Exception e) {
+            responeData.setSuccess(false);
+            responeData.setDescription("Lỗi server: " + e.getMessage());
+            System.out.println("Lỗi server: " + e.getMessage());
+        }
+
+        // Chuyển đổi responeData thành JSON
+        String json = gson.toJson(responeData);
+
+        // Thiết lập response
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.print(json);
+        printWriter.flush();
+		
+	}
+
+	private void doanhThuKhoaHoc(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		ResponeData responeData = new ResponeData();
+
+        try {
+            // Lấy dữ liệu từ service <- repository
+            List<ThongKeDoanhThuKhoaHoc> doanhThuKhoaHoc = khoaHocService.getDoanhThuKhoaHoc();
+
+            if (!doanhThuKhoaHoc.isEmpty()) {
+                responeData.setSuccess(true);
+                responeData.setDescription("Lấy dữ liệu biểu đồ doanhThuKhoaHoc thành công");
+                responeData.setData(doanhThuKhoaHoc);
+                System.out.println("API /api/chart-data lấy được dữ liệu biểu đồ doanhThuKhoaHoc");
+            } else {
+                responeData.setSuccess(false);
+                responeData.setDescription("Không tìm thấy dữ liệu biểu đồ doanhThuKhoaHoc");
+                System.out.println("API /api/chart-data không tìm thấy dữ liệu biểu đồ doanhThuKhoaHoc");
+            }
+        } catch (Exception e) {
+            responeData.setSuccess(false);
+            responeData.setDescription("Lỗi server: " + e.getMessage());
+            System.out.println("Lỗi server: " + e.getMessage());
+        }
+
+        // Chuyển đổi responeData thành JSON
+        String json = gson.toJson(responeData);
+
+        // Thiết lập response
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.print(json);
+        printWriter.flush();
+		
+	}
+
 	private void khoaHocDaBan(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		ResponeData responeData = new ResponeData();
 

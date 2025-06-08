@@ -5,6 +5,8 @@ import java.util.List;
 import course.model.GiangVienData;
 import course.model.LopHoc;
 import course.model.NguoiDung;
+import course.model.NguoiDungTheoNgay;
+import course.model.ThongKeHocVien;
 import course.repository.NguoiDungRepository;
 
 public class NguoiDungService {
@@ -17,12 +19,20 @@ public class NguoiDungService {
 	public List<NguoiDung> getGiaoVienTieuBieu() {
 		return nguoiDungRepository.getGiaoVienTieuBieu();
 	}
-	
-	public List<GiangVienData> getGiangVien(){
+
+	public List<GiangVienData> getGiangVien() {
 		return nguoiDungRepository.getGiangVien();
 	}
-	
+
 	public int getTongSoGiangVien() {
 		return nguoiDungRepository.getTongSoGiangVien();
+	}
+
+	public List<NguoiDungTheoNgay> getSoLuongNguoiDungTheoNgay() {
+		return nguoiDungRepository.getSoLuongNguoiDungTheoNgay();
+	}
+	
+	public ThongKeHocVien getThongKeHocVien() {
+		return nguoiDungRepository.getThongKeHocVien();
 	}
 }

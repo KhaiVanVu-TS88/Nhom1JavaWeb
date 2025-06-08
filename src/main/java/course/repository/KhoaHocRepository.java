@@ -10,11 +10,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import course.config.MySqlConnection;
 import course.model.KhoaHoc;
 import course.model.KhoaHocDaBan;
+import course.model.ThongKeDoanhThuKhoaHoc;
 
 public class KhoaHocRepository  {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LopHocRepository.class);
 	
 	public List<KhoaHoc> getKhoaHocs() {
 		List<KhoaHoc> list = new ArrayList<KhoaHoc>();
@@ -229,6 +235,89 @@ public class KhoaHocRepository  {
         }
 
         return khoaHocDaBanList;
+    }
+	
+	public List<ThongKeDoanhThuKhoaHoc> getDoanhThuKhoaHoc() {
+        List<ThongKeDoanhThuKhoaHoc> list = new ArrayList<>();
+
+        String query = "SELECT " +
+                "    khoahoc.khoahoc_id, " +
+                "    khoahoc.khoahoc_ten, " +
+                "    khoahoc.khoahoc_gia, " +
+                "    COUNT(DISTINCT hocvien_lophoc.hvlh_hocvien_id) AS so_luong_hoc_vien, " +
+                "    (khoahoc.khoahoc_gia * COUNT(DISTINCT hocvien_lophoc.hvlh_hocvien_id)) AS doanh_thu " +
+                "FROM khoahoc " +
+                "JOIN lophoc ON khoahoc.khoahoc_id = lophoc.lophoc_khoahoc_id " +
+                "JOIN hocvien_lophoc ON lophoc.lophoc_id = hocvien_lophoc.hvlh_lophoc_id " +
+                "JOIN nguoidung ON hocvien_lophoc.hvlh_hocvien_id = nguoidung.nguoidung_id " +
+                "WHERE nguoidung.nguoidung_vaitro = 'Học viên' " +
+                "GROUP BY khoahoc.khoahoc_id, khoahoc.khoahoc_ten, khoahoc.khoahoc_gia";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (connection == null) {
+                logger.error("Database connection is null");
+                return list; // Trả về danh sách rỗng nếu không kết nối được
+            }
+
+            while (resultSet.next()) {
+                ThongKeDoanhThuKhoaHoc doanhThuKhoaHoc = new ThongKeDoanhThuKhoaHoc(
+                    resultSet.getInt("khoahoc_id"),
+                    resultSet.getString("khoahoc_ten"),
+                    resultSet.getDouble("khoahoc_gia"),
+                    resultSet.getInt("so_luong_hoc_vien"),
+                    resultSet.getDouble("doanh_thu")
+                );
+                list.add(doanhThuKhoaHoc);
+            }
+        } catch (SQLException e) {
+            logger.error("Lỗi SQL khi lấy dữ liệu biểu đồ: {}", e.getMessage());
+        }
+
+        return list;
+    }
+	
+	public List<KhoaHoc> getTimeLineKhoaHoc(){
+		List<KhoaHoc> list = new ArrayList<>();
+
+        String query = "SELECT " +
+                "    khoahoc_id, " +
+                "    khoahoc_ten, " +
+                "    khoahoc_ngaybatdau, " +
+                "    khoahoc_ngayketthuc " +
+                "FROM khoahoc " +
+                "WHERE khoahoc_ngaybatdau IS NOT NULL " +
+                "AND khoahoc_ngayketthuc IS NOT NULL " +
+                "ORDER BY khoahoc_ngaybatdau";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (connection == null) {
+                logger.error("Database connection is null");
+                return list; // Trả về danh sách rỗng nếu không kết nối được
+            }
+
+            if (!resultSet.isBeforeFirst()) {
+                logger.warn("No data found in result set");
+            }
+
+            while (resultSet.next()) {
+                KhoaHoc khoaHoc = new KhoaHoc();
+                khoaHoc.setKhoahoc_id(resultSet.getInt("khoahoc_id"));
+                khoaHoc.setKhoahoc_ten(resultSet.getString("khoahoc_ten"));
+                khoaHoc.setKhoahoc_ngaybatdau(resultSet.getString("khoahoc_ngaybatdau"));
+                khoaHoc.setKhoahoc_ngayketthuc(resultSet.getString("khoahoc_ngayketthuc"));
+                list.add(khoaHoc);
+            }
+        } catch (SQLException e) {
+            logger.error("Lỗi SQL khi lấy dữ liệu biểu đồ: {}", e.getMessage());
+        }
+
+        return list;
     }
 
 }

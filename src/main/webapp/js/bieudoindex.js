@@ -73,78 +73,7 @@ $(function() {
 	});
 
 	// Employees Analytics
-	$(document).ready(function() {
-		var options = {
-			series: [{
-				name: 'Available',
-				data: [20, 19, 30, 0, 14, 27, 9, 20],
-			}],
-			chart: {
-				height: 140,
-				type: 'line',
-				toolbar: {
-					show: false,
-				}
-			},
-			grid: {
-				show: false,
-				xaxis: {
-					lines: {
-						show: false
-					}
-				},
-				yaxis: {
-					lines: {
-						show: false
-					}
-				},
-			},
-			stroke: {
-				width: 4,
-				curve: 'smooth',
-				colors: ['var(--chart-color2)'],
-			},
-			xaxis: {
-				type: 'datetime',
-				categories: ['1/11/2021', '2/11/2021', '3/11/2021', '4/11/2021', '5/11/2021', '6/11/2021', '7/11/2021', '8/11/2021'],
-				tickAmount: 10,
-				labels: {
-					formatter: function(value, timestamp, opts) {
-						return opts.dateFormatter(new Date(timestamp), 'dd MMM')
-					}
-				}
-			},
-			fill: {
-				type: 'gradient',
-				gradient: {
-					shade: 'dark',
-					gradientToColors: ["var(--chart-color3)"],
-					shadeIntensity: 1,
-					type: 'horizontal',
-					opacityFrom: 1,
-					opacityTo: 1,
-					stops: [0, 100, 100, 100],
-				},
-			},
-			markers: {
-				size: 3,
-				colors: ["#FFA41B"],
-				strokeColors: "#ffffff",
-				strokeWidth: 2,
-				hover: {
-					size: 7,
-				}
-			},
-			yaxis: {
-				show: false,
-				min: -10,
-				max: 50,
-			}
-		};
-
-		var chart = new ApexCharts(document.querySelector("#apex-emplyoeeAnalytics"), options);
-		chart.render();
-	});
+	
 
 	// Hr Resource
 	$(document).ready(function() {
@@ -207,4 +136,6 @@ $(function() {
 			}
 		});
 	});
+	
+	
 });

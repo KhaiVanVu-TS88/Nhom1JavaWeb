@@ -14,10 +14,12 @@ import com.google.gson.Gson;
 
 import course.model.GiangVienData;
 import course.model.KhoaHocDaBan;
+import course.model.NguoiDungTheoNgay;
+import course.model.ThongKeHocVien;
 import course.payload.ResponeData;
 import course.service.NguoiDungService;
 
-@WebServlet(name = "NguoiDungApi", urlPatterns = {"/api/nguoidung/giaovien"})
+@WebServlet(name = "NguoiDungApi", urlPatterns = {"/api/nguoidung/giaovien","/api/nguoidung/soluongtheongay"})
 public class NguoiDungApi extends HttpServlet{
 	
 	private NguoiDungService nguoiDungService = new NguoiDungService();
@@ -30,7 +32,48 @@ public class NguoiDungApi extends HttpServlet{
 		case "/api/nguoidung/giaovien":
 			getGiangVien(req,resp);
 			break;
+		case "/api/nguoidung/soluongtheongay":
+			getSoLuongNguoiDungTheoNgay(req, resp);
+			break;
+		
 		}
+	}
+
+	
+
+	private void getSoLuongNguoiDungTheoNgay(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		ResponeData responeData = new ResponeData();
+
+        try {
+            // Lấy dữ liệu từ service <- repository
+            List<NguoiDungTheoNgay> soLuongNguoiDungTheoNgay = nguoiDungService.getSoLuongNguoiDungTheoNgay();
+
+            if (!soLuongNguoiDungTheoNgay.isEmpty()) {
+                responeData.setSuccess(true);
+                responeData.setDescription("Lấy dữ liệu biểu đồ soLuongNguoiDungTheoNgay thành công ");
+                responeData.setData(soLuongNguoiDungTheoNgay);
+                System.out.println("API /api/chart-data lấy được dữ liệu biểu đồ soLuongNguoiDungTheoNgay");
+            } else {
+                responeData.setSuccess(false);
+                responeData.setDescription("Không tìm thấy dữ liệu biểu đồ soLuongNguoiDungTheoNgay");
+                System.out.println("API /api/nguoidung/soluongtheongay không tìm thấy dữ liệu biểu đồ");
+            }
+        } catch (Exception e) {
+            responeData.setSuccess(false);
+            responeData.setDescription("Lỗi server: " + e.getMessage());
+            System.out.println("Lỗi server: " + e.getMessage());
+        }
+
+        // Chuyển đổi responeData thành JSON
+        String json = gson.toJson(responeData);
+
+        // Thiết lập response
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.print(json);
+        printWriter.flush();
+		
 	}
 
 	private void getGiangVien(HttpServletRequest req, HttpServletResponse resp) throws IOException {

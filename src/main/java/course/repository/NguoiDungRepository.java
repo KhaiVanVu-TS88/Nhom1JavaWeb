@@ -1,9 +1,11 @@
 package course.repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import course.config.MySqlConnection;
 import course.model.GiangVienData;
 import course.model.NguoiDung;
+import course.model.NguoiDungTheoNgay;
+import course.model.ThongKeHocVien;
 
 public class NguoiDungRepository {
     private static final Logger logger = LoggerFactory.getLogger(NguoiDungRepository.class);
@@ -204,6 +208,85 @@ public class NguoiDungRepository {
         }
 
         return tongSoGiangVien;
+    }
+    
+    public List<NguoiDungTheoNgay> getSoLuongNguoiDungTheoNgay() {
+        List<NguoiDungTheoNgay> list = new ArrayList<>();
+        String query = "SELECT DATE(nguoidung_created_at) AS ngay, COUNT(nguoidung_id) AS so_luong " +
+                       "FROM nguoidung " +
+                       "GROUP BY DATE(nguoidung_created_at) " +
+                       "ORDER BY ngay";
+
+        try (Connection connection = MySqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (connection == null) {
+                logger.error("Database connection is null");
+                return list; // Trả về danh sách rỗng nếu không kết nối được
+            }
+
+            while (resultSet.next()) {
+                Date ngay = resultSet.getDate("ngay");
+                int soLuong = resultSet.getInt("so_luong");
+                NguoiDungTheoNgay nguoiDung = new NguoiDungTheoNgay(ngay, soLuong);
+                list.add(nguoiDung);
+            }
+        } catch (SQLException e) {
+            logger.error("Error fetching user registrations by date: {}", e.getMessage());
+        }
+
+        return list;
+    }
+    
+    public ThongKeHocVien getThongKeHocVien() {
+        ThongKeHocVien result = null;
+        // Truy vấn 1: Tổng số học viên
+        String query1 = "SELECT COUNT(*) AS tong_hoc_vien FROM nguoidung WHERE nguoidung_vaitro = 'Học viên'";
+        // Truy vấn 2: Tổng số học viên đã hoàn thành
+        String query2 = "SELECT COUNT(DISTINCT nguoidung.nguoidung_id) AS tong_hoan_thanh " +
+                       "FROM nguoidung " +
+                       "JOIN hocvien_lophoc ON nguoidung.nguoidung_id = hocvien_lophoc.hvlh_hocvien_id " +
+                       "WHERE nguoidung_vaitro = 'Học viên' AND hvlh_trangthai = 'Đã hoàn thành'";
+        // Truy vấn 3: Tổng số học viên đang học
+        String query3 = "SELECT COUNT(DISTINCT nguoidung.nguoidung_id) AS tong_dang_hoc " +
+                       "FROM nguoidung " +
+                       "JOIN hocvien_lophoc ON nguoidung.nguoidung_id = hocvien_lophoc.hvlh_hocvien_id " +
+                       "WHERE nguoidung_vaitro = 'Học viên' AND hvlh_trangthai = 'Đang học'";
+
+        try (Connection connection = MySqlConnection.getConnection()) {
+            if (connection == null) {
+                logger.error("Database connection is null");
+                return null;
+            }
+
+            // Thực thi truy vấn 1
+            try (PreparedStatement ps1 = connection.prepareStatement(query1);
+                 ResultSet rs1 = ps1.executeQuery()) {
+                if (rs1.next()) {
+                    int tongSoHocVien = rs1.getInt("tong_hoc_vien");
+                    // Thực thi truy vấn 2
+                    try (PreparedStatement ps2 = connection.prepareStatement(query2);
+                         ResultSet rs2 = ps2.executeQuery()) {
+                        if (rs2.next()) {
+                            int tongSoHocVienDaHoanThanh = rs2.getInt("tong_hoan_thanh");
+                            // Thực thi truy vấn 3
+                            try (PreparedStatement ps3 = connection.prepareStatement(query3);
+                                 ResultSet rs3 = ps3.executeQuery()) {
+                                if (rs3.next()) {
+                                    int tongSoHocVienDangHoc = rs3.getInt("tong_dang_hoc");
+                                    result = new ThongKeHocVien(tongSoHocVien, tongSoHocVienDaHoanThanh, tongSoHocVienDangHoc);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error fetching statistics for students: {}", e.getMessage());
+        }
+
+        return result;
     }
     
 }

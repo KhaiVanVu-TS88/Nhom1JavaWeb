@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>:: My-Task:: Signin</title>
+    <title>Đăng nhập</title>
     <link rel="icon" href="../favicon.ico" type="image/x-icon"> <!-- Favicon-->
     <!-- project css file  -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/assets/css/my-task.style.min.css">
@@ -35,7 +35,7 @@
                                 </svg>
                             </div>
                             <div class="mb-5">
-                                <h2 class="color-900 text-center">My-Task Let's Management Better</h2>
+                                <h2 class="color-900 text-center">A strong English foundation today, opens vast doors to your future tomorrow.</h2>
                             </div>
                             <!-- Image block -->
                             <div class="">
@@ -48,21 +48,21 @@
                             <!-- Form -->
                             <form class="row g-1 p-3 p-md-4" action = "${pageContext.request.contextPath}/signin" method ="post">
                                 <div class="col-12 text-center mb-1 mb-lg-5">
-                                    <h1>Sign in</h1>
-                                    <span>Free access to our dashboard.</span>
+                                    <h1>Đăng nhập</h1>
+                                    <span>Đăng nhập vào tài khoản của bạn</span>
                                 </div>
                                 <div class="col-12 text-center mb-4">
                                     <a class="btn btn-lg btn-outline-secondary btn-block" href="#">
                                         <span class="d-flex justify-content-center align-items-center">
                                             <img class="avatar xs me-2" src="${pageContext.request.contextPath}/dist/assets/images/google.svg" alt="Image Description">
-                                            Sign in with Google
+                                            Đăng nhập với Google
                                         </span>
                                     </a>
                                     <span class="dividers text-muted mt-4">OR</span>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-2">
-                                        <label class="form-label">Email address</label>
+                                        <label class="form-label">Địa chỉ Email</label>
                                         <input type="text" name ="email" class="form-control form-control-lg" placeholder="name@example.com" >
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <div class="mb-2">
                                         <div class="form-label">
                                             <span class="d-flex justify-content-between align-items-center">
-                                                Password
+                                                Mật khẩu
                                                 <a class="text-secondary" href="auth-password-reset.html">Forgot Password?</a>
                                             </span>
                                         </div>
@@ -81,16 +81,16 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
-                                            Remember me
+                                            Nhớ tài khoản
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mt-4">
                                     <!-- <a href="index.html" class="btn btn-lg btn-block btn-light lift text-uppercase" atl="signin">SIGN IN</a> -->
-                                    <button type="submit" class="btn btn-lg btn-block btn-light lift text-uppercase">SIGN IN</button>
+                                    <button type="submit" class="btn btn-lg btn-block btn-light lift text-uppercase">ĐĂNG NHẬP</button>
                                 </div>
                                 <div class="col-12 text-center mt-4">
-                                    <span class="text-muted">Don't have an account yet? <a href="auth-signup.html" class="text-secondary">Sign up here</a></span>
+                                    <span class="text-muted">Bạn chưa có tài khoản?<a href="auth-signup.html" class="text-secondary"> Đăng ký</a></span>
                                 </div>
                             </form>
                             <!-- End Form -->
