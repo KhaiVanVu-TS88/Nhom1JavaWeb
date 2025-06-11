@@ -24,6 +24,8 @@
 List<NguoiDung> listGiangVienTieuBieu = (List<NguoiDung>) request.getAttribute("GiangVienTieuBieu");
 int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
 
+NguoiDung nguoiDungHienTai = (NguoiDung) request.getAttribute("NguoiDungHienTai");
+
 %>
 
 <body>
@@ -33,7 +35,7 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
         <!-- sidebar -->
         <div class="sidebar px-4 py-4 py-md-5 me-0">
 			<div class="d-flex flex-column h-100">
-				<a href="index.html" class="mb-0 brand-icon"> <span
+				<a href="${pageContext.request.contextPath}/Dashboard" class="mb-0 brand-icon"> <span
 					class="logo-icon"> <svg width="35" height="35"
 							fill="currentColor" class="bi bi-clipboard-check"
 							viewBox="0 0 16 16">
@@ -80,10 +82,8 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
 								viên</span> <span
 							class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a> <!-- Menu: Sub menu ul -->
 						<ul class="sub-menu collapse" id="client-Components">
-							<li><a class="ms-link" href="<%=request.getContextPath()%>/giangvien"> <span>Danh
-										sách</span></a></li>
-							<li><a class="ms-link" href="profile.html"> <span>Hồ
-										sơ giảng viên</span></a></li>
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/tablemember2"> <span>Danh sách</span></a></li>
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/thungrachocvien"> <span>Thùng rác</span></a></li>
 						</ul></li>
 					<li class="collapsed"><a class="m-link"
 						data-bs-toggle="collapse" data-bs-target="#emp-Components"
@@ -91,10 +91,8 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
 								viên</span> <span
 							class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a> <!-- Menu: Sub menu ul -->
 						<ul class="sub-menu collapse" id="emp-Components">
-							<li><a class="ms-link" href="<%=request.getContextPath()%>/hocvien"> <span>Học
-										viên</span></a></li>
-							<li><a class="ms-link" href="employee-profile.html"> <span>Hồ
-										sơ học viên</span></a></li>
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/tablemember"> <span>Danh sách</span></a></li>
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/thungrachocvien"> <span>Thùng rác</span></a></li>
 						</ul></li>
 				</ul>
 				<!-- Theme: Switch Theme -->
@@ -138,25 +136,25 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
                              
                             <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
                                 <div class="u-info me-2">
-                                    <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">Dylan Hunter</span></p>
-                                    <small>Admin Profile</small>
+                                    <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold"> <%=nguoiDungHienTai.getNguoidung_hoten() %> </span></p>
+                                    <small> <%=nguoiDungHienTai.getNguoidung_vaitro()%> </small>
                                 </div>
                                 <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button"
                                     data-bs-toggle="dropdown" data-bs-display="static">
                                     <img class="avatar lg rounded-circle img-thumbnail"
-                                        src="assets/images/profile_av.png" alt="profile">
+                                        src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png" alt="profile">
                                 </a>
                                 <div
                                     class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
                                     <div class="card border-0 w280">
                                         <div class="card-body pb-0">
                                             <div class="d-flex py-1">
-                                                <img class="avatar rounded-circle" src="assets/images/profile_av.png"
+                                                <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png"
                                                     alt="profile">
                                                 <div class="flex-fill ms-3">
-                                                    <p class="mb-0"><span class="font-weight-bold">Dylan Hunter</span>
+                                                    <p class="mb-0"><span class="font-weight-bold"><%=nguoiDungHienTai.getNguoidung_hoten() %></span>
                                                     </p>
-                                                    <small class="">Dylan.hunter@gmail.com</small>
+                                                    <small class=""><%=nguoiDungHienTai.getNguoidung_email() %></small>
                                                 </div>
                                             </div>
 
@@ -165,19 +163,19 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
                                             </div>
                                         </div>
                                         <div class="list-group m-2 ">
-                                            <a href="task.html"
+                                            <a href="${pageContext.request.contextPath}/Dashboard"
                                                 class="list-group-item list-group-item-action border-0 "><i
                                                     class="icofont-tasks fs-5 me-3"></i>Quản lý</a>
                                              
-                                            <a href="ui-elements/auth-signin.html"
+                                            <a href="${pageContext.request.contextPath}/signin"
                                                 class="list-group-item list-group-item-action border-0 "><i
                                                     class="icofont-logout fs-6 me-3"></i>Đăng xuất</a>
-                                            <div>
+                                            <!--  <div>
                                                 <hr class="dropdown-divider border-dark">
                                             </div>
                                             <a href="ui-elements/auth-signup.html"
                                                 class="list-group-item list-group-item-action border-0 "><i
-                                                    class="icofont-contact-add fs-5 me-3"></i>Thêm tài khoản</a>
+                                                    class="icofont-contact-add fs-5 me-3"></i>Thêm tài khoản</a>-->
                                         </div>
                                     </div>
                                 </div>
@@ -205,6 +203,7 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
                     </div>
                 </nav>
             </div>
+            <!-- end main body area -->
 
             <!-- Body: Body -->
             <div class="body d-flex py-3">
@@ -246,7 +245,7 @@ int tongSoGiangVien = (Integer) request.getAttribute("TongSoGiangVien");
                                     <div class="card h-100">
                                         <div
                                             class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold">SỐ LƯỢNG KHÓA HỌC BẮT ĐẦU THEO THÁNG</h6>
+                                            <h6 class="mb-0 fw-bold">SỐ LƯỢT MUA KHÓA HỌC THEO TỪNG THÁNG</h6>
                                         </div>
                                         <div class="card-body">
                                             <div id="KhoaHocDaBan"></div>

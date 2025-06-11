@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import course.model.NguoiDung;
 import course.model.ThongKeHocVien;
 import course.service.NguoiDungService;
 
@@ -23,6 +24,10 @@ public class KhoaHocDashBoardServlet extends HttpServlet {
 		ThongKeHocVien thongKeHocVien = nguoiDungService.getThongKeHocVien();
 		System.out.println("thong ke hoc vien "+thongKeHocVien);
 		req.setAttribute("ThongKeHocVien", thongKeHocVien);
+		
+		NguoiDung nguoiDung = (NguoiDung) req.getSession().getAttribute("NguoiDung");
+	    System.out.println("Admin "+nguoiDung.getNguoidung_hoten() + " Đã đăng nhập vào hệ thống");
+	    req.setAttribute("NguoiDungHienTai", nguoiDung);
 		
 		req.getRequestDispatcher("dist/project-dashboard.jsp").forward(req, resp);
 

@@ -20,9 +20,9 @@ $(function() {
 
 					// Tách labels và series từ dữ liệu
 					var labels = data.map(item => {
-						if (item.label === 'Basic') return 'Basic';
-						if (item.label === 'Intermediate') return 'Intermediate';
-						if (item.label === 'Advanced') return 'Advanced';
+						if (item.label === 'Basic') return 'Cơ bản';
+						if (item.label === 'Intermediate') return 'Trung cấp';
+						if (item.label === 'Advanced') return 'Nâng cao';
 						return item.label; // Xử lý trường hợp khác (nếu có)
 					});
 					var series = data.map(item => item.value);

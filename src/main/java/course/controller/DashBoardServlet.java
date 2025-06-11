@@ -29,6 +29,12 @@ public class DashBoardServlet extends HttpServlet {
 	    int tongSoGiangVien = nguoiDungService.getTongSoGiangVien();
 	    System.out.println("Tong so giang vien: "+tongSoGiangVien);
 	    req.setAttribute("TongSoGiangVien", tongSoGiangVien);
+	    
+	    NguoiDung nguoiDung = (NguoiDung) req.getSession().getAttribute("NguoiDung");
+	    System.out.println("Admin "+nguoiDung.getNguoidung_hoten() + " Đã đăng nhập vào hệ thống");
+	    req.setAttribute("NguoiDungHienTai", nguoiDung);
+	    
+	    
 		
 		req.getRequestDispatcher("dist/index.jsp").forward(req, resp);
 	}

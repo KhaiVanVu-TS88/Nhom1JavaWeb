@@ -1,5 +1,9 @@
 package course.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class KhoaHoc {
 	private int khoahoc_id;
 	private String khoahoc_ten;
@@ -126,6 +130,76 @@ public class KhoaHoc {
 
 	public void setKhoahoc_updated_at(String khoahoc_updated_at) {
 		this.khoahoc_updated_at = khoahoc_updated_at;
+	}
+	
+	public double getTienDo() {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            LocalDate startDate = LocalDate.parse(khoahoc_ngaybatdau, formatter);
+            LocalDate endDate = LocalDate.parse(khoahoc_ngayketthuc, formatter);
+            LocalDate today = LocalDate.now();
+
+            long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
+            if (totalDays <= 0) return 0.0;
+
+            long daysPassed = ChronoUnit.DAYS.between(startDate, today);
+            daysPassed = Math.max(0, Math.min(daysPassed, totalDays));
+
+            return (daysPassed * 100.0) / totalDays;
+
+        } catch (Exception e) {
+            // Có thể ghi log nếu cần
+            return 0.0;
+        }
+    }
+	
+	public long getSoNgayConLai() {
+	    try {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate today = LocalDate.now();
+	        LocalDate endDate = LocalDate.parse(khoahoc_ngayketthuc, formatter);
+
+	        long daysLeft = ChronoUnit.DAYS.between(today, endDate);
+	        return Math.max(daysLeft, 0); // Không cho kết quả âm
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
+	}
+	
+	public void updateTrangThai() {
+	    try {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate today = LocalDate.now();
+	        LocalDate startDate = LocalDate.parse(khoahoc_ngaybatdau, formatter);
+	        LocalDate endDate = LocalDate.parse(khoahoc_ngayketthuc, formatter);
+
+	        if (today.isBefore(startDate)) {
+	            khoahoc_trangthai = "Sắp mở";
+	        } else if (today.isAfter(endDate)) {
+	            khoahoc_trangthai = "Đóng";
+	        } else {
+	            khoahoc_trangthai = "Đang mở";
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        khoahoc_trangthai = "Lỗi";
+	    }
+	}
+	
+	public long getThoiGianKhoaHoc(String khoahoc_ngaybatdau, String khoahoc_ngayketthuc) {
+	    try {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        LocalDate startDate = LocalDate.parse(khoahoc_ngaybatdau, formatter);
+	        LocalDate endDate = LocalDate.parse(khoahoc_ngayketthuc, formatter);
+
+	        long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
+	        return Math.max(monthsBetween, 0); // Ensure non-negative result
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
 	}
 
 }

@@ -43,4 +43,8 @@ public class NguoiDungService {
 	public boolean deleteNguoiDungById(int nguoidung_id) {
 		return nguoiDungRepository.deleteNguoiDungById(nguoidung_id) > 0 ? true : false;
 	}
+	
+	public NguoiDung getNguoiDung(String nguoiDung_email, String nguoiDung_MatKhau) {
+		return nguoiDungRepository.getNguoiDung(nguoiDung_email, nguoiDung_MatKhau);
+	}
 }

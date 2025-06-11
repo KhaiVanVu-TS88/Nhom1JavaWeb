@@ -90,7 +90,7 @@
                                     <button type="submit" class="btn btn-lg btn-block btn-light lift text-uppercase">ĐĂNG NHẬP</button>
                                 </div>
                                 <div class="col-12 text-center mt-4">
-                                    <span class="text-muted">Bạn chưa có tài khoản?<a href="auth-signup.html" class="text-secondary"> Đăng ký</a></span>
+                                    <span class="text-muted">Bạn chưa có tài khoản?<a href="${pageContext.request.contextPath}/signup" class="text-secondary"> Đăng ký</a></span>
                                 </div>
                             </form>
                             <!-- End Form -->

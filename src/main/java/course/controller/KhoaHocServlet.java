@@ -34,6 +34,10 @@ public class KhoaHocServlet extends HttpServlet {
 	    List<NguoiDung> listNguoiDung = nguoiDungService.getNguoiDungHoTenByNguoiDungVaiTro("Giáo viên");
 	    System.out.println("Danh sach nguoi dung: "+ listNguoiDung);
 	    req.setAttribute("NguoiDung", listNguoiDung);
+	    
+	    NguoiDung nguoiDung = (NguoiDung) req.getSession().getAttribute("NguoiDung");
+	    System.out.println("Admin "+nguoiDung.getNguoidung_hoten() + " Đã đăng nhập vào hệ thống");
+	    req.setAttribute("NguoiDungHienTai", nguoiDung);
 	    	
 		req.getRequestDispatcher("/dist/projects.jsp").forward(req, resp);
 

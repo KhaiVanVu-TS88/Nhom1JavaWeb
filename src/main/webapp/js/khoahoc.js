@@ -208,7 +208,8 @@ $(document).ready(function() {
 			return;
 		}
 
-		//currentKhoaHocId = khoahocId;
+		// Gán khoahocId vào nút "Thêm lớp học"
+		$('#readLopHoc .modal-footer .btn-dark').attr('data-khoahoc-id', khoahocId);
 
 		$.ajax({
 			method: 'GET',
@@ -226,12 +227,12 @@ $(document).ready(function() {
 					responseData.data.forEach(function(lopHoc) {
 						// Xác định class cho badge trạng thái
 						let badgeClass = 'bg-info';
-						if (lopHoc.lophoc_trangthai === 'Đang diễn ra') badgeClass = 'bg-success';
+						if (lopHoc.lophoc_trangthai === 'Đang học') badgeClass = 'bg-success';
 						else if (lopHoc.lophoc_trangthai === 'Chưa bắt đầu') badgeClass = 'bg-warning';
 						else if (lopHoc.lophoc_trangthai === 'Đã kết thúc') badgeClass = 'bg-danger';
 
 						// Lấy tiến độ từ dữ liệu (nếu có) hoặc mặc định 40%
-						const progress = lopHoc.lophoc_tiendo || 40;
+						const progress = lopHoc.lophoc_tiendo;
 
 						// Tạo hàng bảng
 						const row = `
@@ -310,6 +311,12 @@ $(document).ready(function() {
 
 
 	});
+	
+	// Thêm sự kiện click cho nút "Thêm lớp học" để truyền khoahocId vào modal createLopHoc
+    $('#readLopHoc .modal-footer .btn-dark').off('click').on('click', function() {
+        const khoahocId = $(this).attr('data-khoahoc-id');
+        $('#createLopHoc #lophoc_khoahoc_id').val(khoahocId);
+    });
 
 	//thêm lớp học
 	$('#btn-add-lophoc').off('click').on('click', function(e) {
@@ -451,7 +458,7 @@ $(document).ready(function() {
 		}
 	});
 
-//Hiển thị danh sách học viên trong một lớp học
+	//Hiển thị danh sách học viên trong một lớp học
 	$(document).on('click', '.btn-hienthi-danhsachhocvien', function() {
 		var lophocId = $(this).data('lophoc-id');
 		var tableBody = $('#danhsachhocvien-tbody');
@@ -479,13 +486,13 @@ $(document).ready(function() {
 
 					responseData.data.forEach(function(hocVien) {
 						// Xác định class cho badge trạng thái
-						let badgeClass = 'bg-info';
-						if (hocVien.nguoidung_trangthai === 'Đang học') badgeClass = 'bg-success';
-						else if (hocVien.nguoidung_trangthai === 'Tạm dừng') badgeClass = 'bg-warning';
-						else if (hocVien.nguoidung_trangthai === 'Đã hoàn thành') badgeClass = 'bg-danger';
-						else if (hocVien.nguoidung_trangthai === 'Đã đăng ký') badgeClass = 'bg-primary';
-						else if (hocVien.nguoidung_trangthai === 'Đã thanh toán') badgeClass = 'bg-secondary';
-						else if (hocVien.nguoidung_trangthai === 'Đã hủy') badgeClass = 'bg-dark';
+						let badgeClass = 'bg-warning text-dark';
+						if (hocVien.nguoidung_trangthai === 'Đang học') badgeClass = 'bg-info text-white';
+						else if (hocVien.nguoidung_trangthai === 'Tạm dừng') badgeClass = 'bg-warning text-dark';
+						else if (hocVien.nguoidung_trangthai === 'Đã hoàn thành') badgeClass = 'bg-success text-white';
+						else if (hocVien.nguoidung_trangthai === 'Đã đăng ký') badgeClass = 'bg-info text-white';
+						else if (hocVien.nguoidung_trangthai === 'Đã thanh toán') badgeClass = 'bg-success text-white';
+						else if (hocVien.nguoidung_trangthai === 'Đã hủy') badgeClass = 'bg-danger text-white';
 
 						// Tạo hàng bảng
 						const row = `

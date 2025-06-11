@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import course.model.NguoiDung;
+import course.service.NguoiDungService;
 import course.service.SigninService;
 
 @WebServlet(name = "SignIn", urlPatterns = { "/signin" })
 public class SigninServlet extends HttpServlet {
 
 	private SigninService signinService = new SigninService();
+	private NguoiDungService nguoiDungService = new NguoiDungService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,10 +36,27 @@ public class SigninServlet extends HttpServlet {
 		String nguoidung_matkhau = req.getParameter("password");
 		//System.out.println("password: "+nguoidung_matkhau);
 		
-		boolean isSignin = signinService.checkSignin(nguoidung_email, nguoidung_matkhau);
-
-		System.out.println(isSignin);
-		if(isSignin) resp.sendRedirect(req.getContextPath()+"/Dashboard");
-		//req.getRequestDispatcher("dist/ui-elements/auth-signin.jsp").forward(req, resp);
+		NguoiDung nguoiDung = nguoiDungService.getNguoiDung(nguoidung_email, nguoidung_matkhau);
+		
+		
+		String quyen = signinService.getQuyenNguoiDung(nguoidung_email, nguoidung_matkhau);
+		switch(quyen) {
+		case "Quản trị viên":
+			System.out.println("Quản trị viên đã đăng nhập vào hệ thống");
+			req.getSession().setAttribute("NguoiDung", nguoiDung);// Lưu NguoiDung vào session
+			resp.sendRedirect(req.getContextPath()+"/Dashboard");
+			break;
+		case "Giáo viên":
+			System.out.println("Giáo viên đã đăng nhập vào hệ thống");
+			resp.sendRedirect(req.getContextPath()+"/");
+			break;
+		case "Học viên":
+			System.out.println("Học viên đã đăng nhập vào hệ thống");
+			resp.sendRedirect(req.getContextPath()+"/");
+			break;
+		case "":
+			System.out.println("Người dùng lạ đã cố đăng nhập vào hệ thống");
+			resp.sendRedirect(req.getContextPath()+"/");
+		}
 	}
 }

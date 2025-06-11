@@ -75,7 +75,7 @@ public class LopHocRepository  {
 					lopHoc.setLophoc_khoahoc_id(resultSet.getInt("lophoc_khoahoc_id"));
 					lopHoc.setLophoc_ten(resultSet.getString("lophoc_ten"));
 					lopHoc.setLophoc_mota(resultSet.getString("lophoc_mota"));
-					lopHoc.setLophoc_trangthai(resultSet.getString("lophoc_trangthai"));
+//					lopHoc.setLophoc_trangthai(resultSet.getString("lophoc_trangthai"));
 					lopHoc.setLophoc_ngaybatdau(resultSet.getString("lophoc_ngaybatdau"));
 					lopHoc.setLophoc_ngayketthuc(resultSet.getString("lophoc_ngayketthuc"));
 					lopHoc.setLophoc_soluonghv(resultSet.getInt("lophoc_soluonghv"));
@@ -85,6 +85,8 @@ public class LopHocRepository  {
 					lopHoc.setLophoc_tailieu(resultSet.getString("lophoc_tailieu"));
 					lopHoc.setLophoc_created_at(resultSet.getString("lophoc_created_at"));
 					lopHoc.setLophoc_updated_at(resultSet.getString("lophoc_updated_at"));
+					lopHoc.updateTrangThai();
+					lopHoc.updateTienDo();
 					list.add(lopHoc);
 				}
 			}
@@ -275,7 +277,7 @@ public class LopHocRepository  {
 					lopHoc.setLophoc_khoahoc_id(resultSet.getInt("lophoc_khoahoc_id"));
 					lopHoc.setLophoc_ten(resultSet.getString("lophoc_ten"));
 					lopHoc.setLophoc_mota(resultSet.getString("lophoc_mota"));
-					lopHoc.setLophoc_trangthai(resultSet.getString("lophoc_trangthai"));
+//					lopHoc.setLophoc_trangthai(resultSet.getString("lophoc_trangthai"));
 					lopHoc.setLophoc_ngaybatdau(resultSet.getString("lophoc_ngaybatdau"));
 					lopHoc.setLophoc_ngayketthuc(resultSet.getString("lophoc_ngayketthuc"));
 					lopHoc.setLophoc_soluonghv(resultSet.getInt("lophoc_soluonghv"));
@@ -288,6 +290,7 @@ public class LopHocRepository  {
 					lopHoc.setGiaovien_hoten(
 							resultSet.getString("nguoidung_hoten") != null ? resultSet.getString("nguoidung_hoten")
 									: "");
+					lopHoc.updateTrangThai();
 
 					list.add(lopHoc);
 				}

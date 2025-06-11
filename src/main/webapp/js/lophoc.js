@@ -151,7 +151,10 @@ $(function() {
 						fill: {
 							opacity: 1,
 							colors: ['var(--chart-color1)', 'var(--chart-color2)', 'var(--chart-color3)', 'var(--chart-color4)',
-								'var(--chart-color5)', 'var(--chart-color6)', 'var(--chart-color7)', 'var(--chart-color8)'],
+								'var(--chart-color5)', 'var(--chart-color6)', 'var(--chart-color7)', 'var(--chart-color8)', 
+								'#000000', '#FF5733', '#33FF57', '#3375FF', '#FFC300', '#DAF7A6', '#8E44AD', '#1ABC9C', 
+								'#E74C3C', '#F39C12', '#2ECC71', '#3498DB',
+							'#7F8C8D', '#C0392B', '#9B59B6', '#16A085'],
 						},
 						stroke: {
 							width: 1,

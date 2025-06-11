@@ -277,7 +277,8 @@ public class KhoaHocApi extends HttpServlet {
 		LocalDate khoahoc_ngaybatdau = LocalDate.parse(req.getParameter("khoahoc_ngaybatdau"));// Parse LocalDate từ String (format phải là yyyy-MM-dd)
 		LocalDate khoahoc_ngayketthuc = LocalDate.parse(req.getParameter("khoahoc_ngayketthuc"));
 		int khoahoc_thoiluong = Integer.parseInt(req.getParameter("khoahoc_thoiluong"));// Parse int và BigDecimal đúng cách
-		BigDecimal khoahoc_gia = new BigDecimal(req.getParameter("khoahoc_gia"));
+		//BigDecimal khoahoc_gia = new BigDecimal(req.getParameter("khoahoc_gia"));
+		int khoahoc_gia = Integer.parseInt(req.getParameter("khoahoc_gia"));
 
 		boolean isSuccess = khoaHocService.insertKhoaHoc( khoahoc_ten, khoahoc_mota , khoahoc_trinhdo ,
 				 khoahoc_loai, khoahoc_ngaybatdau , khoahoc_ngayketthuc,

@@ -58,6 +58,124 @@ public class NguoiDungRepository {
 
 		return list;
 	}
+	
+	public NguoiDung getNguoiDung(String nguoiDung_email,
+			String nguoiDung_MatKhau) {
+		NguoiDung nguoiDung = new NguoiDung();
+		String query = "SELECT * FROM nguoidung WHERE nguoidung_email = ? AND nguoidung_matkhau = ?";
+
+		try (Connection connection = MySqlConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, nguoiDung_email);
+			preparedStatement.setString(2, nguoiDung_MatKhau);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					
+					nguoiDung.setNguoidung_id(resultSet.getInt("nguoidung_id"));
+					nguoiDung.setNguoidung_email(resultSet.getString("nguoidung_email"));
+					nguoiDung.setNguoidung_matkhau(resultSet.getString("nguoidung_matkhau"));
+					nguoiDung.setNguoidung_hoten(resultSet.getString("nguoidung_hoten"));
+					nguoiDung.setNguoidung_sdt(resultSet.getString("nguoidung_sdt"));
+					nguoiDung.setNguoidung_diachi(resultSet.getString("nguoidung_diachi"));
+					nguoiDung.setNguoidung_avatar(resultSet.getString("nguoidung_avatar"));
+					nguoiDung.setNguoidung_vaitro(resultSet.getString("nguoidung_vaitro"));
+					nguoiDung.setNguoidung_trangthai(resultSet.getString("nguoidung_trangthai"));
+					nguoiDung.setNguoidung_sodu(resultSet.getInt("nguoidung_sodu"));
+					nguoiDung.setNguoidung_nganhang(resultSet.getString("nguoidung_nganhang"));
+					nguoiDung.setNguoidung_stk(resultSet.getString("nguoidung_stk"));
+					nguoiDung.setNguoidung_created_at(resultSet.getString("nguoidung_created_at"));
+					nguoiDung.setNguoidung_updated_at(resultSet.getString("nguoidung_updated_at"));
+
+					
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("Error fetching NguoiDung with email: {}", nguoiDung_email, e);
+		}
+
+		return nguoiDung;
+	}
+	
+	public List<NguoiDung> getAdmin(String nguoiDung_email,
+			String nguoiDung_MatKhau) {
+		List<NguoiDung> list = new ArrayList<>();
+		String query = "SELECT * FROM nguoidung WHERE nguoidung_email = ? AND nguoidung_matkhau = ?";
+
+		try (Connection connection = MySqlConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, nguoiDung_email);
+			preparedStatement.setString(2, nguoiDung_MatKhau);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					NguoiDung nguoiDung = new NguoiDung();
+					nguoiDung.setNguoidung_id(resultSet.getInt("nguoidung_id"));
+					nguoiDung.setNguoidung_email(resultSet.getString("nguoidung_email"));
+					nguoiDung.setNguoidung_matkhau(resultSet.getString("nguoidung_matkhau"));
+					nguoiDung.setNguoidung_hoten(resultSet.getString("nguoidung_hoten"));
+					nguoiDung.setNguoidung_sdt(resultSet.getString("nguoidung_sdt"));
+					nguoiDung.setNguoidung_diachi(resultSet.getString("nguoidung_diachi"));
+					nguoiDung.setNguoidung_avatar(resultSet.getString("nguoidung_avatar"));
+					nguoiDung.setNguoidung_vaitro(resultSet.getString("nguoidung_vaitro"));
+					nguoiDung.setNguoidung_trangthai(resultSet.getString("nguoidung_trangthai"));
+					nguoiDung.setNguoidung_sodu(resultSet.getInt("nguoidung_sodu"));
+					nguoiDung.setNguoidung_nganhang(resultSet.getString("nguoidung_nganhang"));
+					nguoiDung.setNguoidung_stk(resultSet.getString("nguoidung_stk"));
+					nguoiDung.setNguoidung_created_at(resultSet.getString("nguoidung_created_at"));
+					nguoiDung.setNguoidung_updated_at(resultSet.getString("nguoidung_updated_at"));
+
+					if (nguoiDung.getNguoidung_vaitro().equals("Quản trị viên"))
+						list.add(nguoiDung);
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("Error fetching NguoiDung with email: {}", nguoiDung_email, e);
+		}
+
+		return list;
+	}
+	
+	public String getQuyenNguoiDung(String nguoiDung_email,
+			String nguoiDung_MatKhau) {
+		String quyen = null;
+		List<NguoiDung> list = new ArrayList<>();
+		String query = "SELECT * FROM nguoidung WHERE nguoidung_email = ? AND nguoidung_matkhau = ?";
+
+		try (Connection connection = MySqlConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, nguoiDung_email);
+			preparedStatement.setString(2, nguoiDung_MatKhau);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					NguoiDung nguoiDung = new NguoiDung();
+					nguoiDung.setNguoidung_id(resultSet.getInt("nguoidung_id"));
+					nguoiDung.setNguoidung_email(resultSet.getString("nguoidung_email"));
+					nguoiDung.setNguoidung_matkhau(resultSet.getString("nguoidung_matkhau"));
+					nguoiDung.setNguoidung_hoten(resultSet.getString("nguoidung_hoten"));
+					nguoiDung.setNguoidung_sdt(resultSet.getString("nguoidung_sdt"));
+					nguoiDung.setNguoidung_diachi(resultSet.getString("nguoidung_diachi"));
+					nguoiDung.setNguoidung_avatar(resultSet.getString("nguoidung_avatar"));
+					nguoiDung.setNguoidung_vaitro(resultSet.getString("nguoidung_vaitro"));
+					nguoiDung.setNguoidung_trangthai(resultSet.getString("nguoidung_trangthai"));
+					nguoiDung.setNguoidung_sodu(resultSet.getInt("nguoidung_sodu"));
+					nguoiDung.setNguoidung_nganhang(resultSet.getString("nguoidung_nganhang"));
+					nguoiDung.setNguoidung_stk(resultSet.getString("nguoidung_stk"));
+					nguoiDung.setNguoidung_created_at(resultSet.getString("nguoidung_created_at"));
+					nguoiDung.setNguoidung_updated_at(resultSet.getString("nguoidung_updated_at"));
+
+//					if (nguoiDung.getNguoidung_vaitro().equals("Quản trị viên"))
+					list.add(nguoiDung);
+					quyen = nguoiDung.getNguoidung_vaitro();
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("Error fetching NguoiDung with email: {}", nguoiDung_email, e);
+		}
+
+		return quyen;
+	}
 
 	public List<NguoiDung> getNguoiDungHoTenByNguoiDungVaiTro(String nguoidung_vaitro) {
 		List<NguoiDung> list = new ArrayList<>();
@@ -226,7 +344,11 @@ public class NguoiDungRepository {
 		// Truy vấn 3: Tổng số học viên đang học
 		String query3 = "SELECT COUNT(DISTINCT nguoidung.nguoidung_id) AS tong_dang_hoc " + "FROM nguoidung "
 				+ "JOIN hocvien_lophoc ON nguoidung.nguoidung_id = hocvien_lophoc.hvlh_hocvien_id "
-				+ "WHERE nguoidung_vaitro = 'Học viên' AND hvlh_trangthai = 'Đang học'";
+				+ "WHERE nguoidung_vaitro = 'Học viên' AND (\r\n"
+				+ "    hvlh_trangthai = 'Đang học' \r\n"
+				+ "    OR hvlh_trangthai = 'Đã đăng ký' \r\n"
+				+ "    OR hvlh_trangthai = 'Đã thanh toán'\r\n"
+				+ "  )";
 
 		try (Connection connection = MySqlConnection.getConnection()) {
 			if (connection == null) {

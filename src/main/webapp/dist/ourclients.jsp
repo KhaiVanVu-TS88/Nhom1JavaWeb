@@ -1,4 +1,5 @@
 <!doctype html>
+<%@page import="course.model.NguoiDung"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html class="no-js" lang="en" dir="ltr">
@@ -8,19 +9,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>:: My-Task:: Ourclients</title>
+    <title>Giảng viên</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
     <!-- project css file  -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/dist/assets/css/my-task.style.min.css">
 </head>
 <body>
-
+<% NguoiDung nguoiDungHienTai = (NguoiDung) request.getAttribute("NguoiDungHienTai"); %>
 <div id="mytask-layout" class="theme-indigo">
 
      <!-- sidebar -->
-		<div class="sidebar px-4 py-4 py-md-5 me-0">
+        <div class="sidebar px-4 py-4 py-md-5 me-0">
 			<div class="d-flex flex-column h-100">
-				<a href="index.html" class="mb-0 brand-icon"> <span
+				<a href="${pageContext.request.contextPath}/Dashboard" class="mb-0 brand-icon"> <span
 					class="logo-icon"> <svg width="35" height="35"
 							fill="currentColor" class="bi bi-clipboard-check"
 							viewBox="0 0 16 16">
@@ -78,10 +79,9 @@
 								viên</span> <span
 							class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a> <!-- Menu: Sub menu ul -->
 						<ul class="sub-menu collapse" id="emp-Components">
-							<li><a class="ms-link" href="<%=request.getContextPath()%>/hocvien"> <span>Học
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/tablemember"> <span>Học
 										viên</span></a></li>
-							<li><a class="ms-link" href="employee-profile.html"> <span>Hồ
-										sơ học viên</span></a></li>
+							<li><a class="ms-link" href="<%=request.getContextPath()%>/thungrachocvien"> <span>Thùng rác</span></a></li>
 						</ul></li>
 				</ul>
 				<!-- Theme: Switch Theme -->
@@ -109,143 +109,90 @@
 				</button>
 			</div>
 		</div>
-		<!-- end sider bar -->
-<!-- denday -->
-    <!-- main body area -->
-    <div class="main px-lg-4 px-md-4">
+		<!-- end siderbar-->
 
-        <!-- Body: Header -->
-        <div class="header">
-            <nav class="navbar py-4">
-                <div class="container-xxl">
-    
-                    <!-- header rightbar icon -->
-                    <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
-                        <div class="dropdown notifications zindex-popover">
-                            <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="icofont-alarm fs-5"></i>
-                                <span class="pulse-ring"></span>
-                            </a>
-                            <div id="NotificationsDiv" class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-sm-end p-0 m-0">
-                                <div class="card border-0 w380">
-                                    <div class="card-header border-0 p-3">
-                                        <h5 class="mb-0 font-weight-light d-flex justify-content-between">
-                                            <span>Thông báo</span>
-                                            <span class="badge text-white">6</span>
-                                        </h5>
-                                    </div>
-                                    <div class="tab-content card-body">
-                                        <div class="tab-pane fade show active">
-                                            <ul class="list-unstyled list mb-0">
-                                                <li class="py-2 mb-1 border-bottom">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar1.jpg" alt="">
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Nguyễn Văn A</span> <small>2 phút trước</small></p>
-                                                            <span class="">Đã bắt đầu lớp học</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="py-2 mb-1 border-bottom">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <div class="avatar rounded-circle no-thumbnail">KV</div>
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Nguyễn Văn B</span> <small>13 phút trước</small></p>
-                                                            <span class="">Xin tài liệu giảng dạy</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="py-2 mb-1 border-bottom">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar3.jpg" alt="">
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Nguyễn Văn C</span> <small>1 giờ trước</small></p>
-                                                            <span class="">Đã bắt đầu lớp học</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="py-2 mb-1 border-bottom">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar5.jpg" alt="">
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Trần Văn A</span> <small>4 phút trước</small></p>
-                                                            <span class="">Đã bắt đầu lớp học</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="py-2 mb-1 border-bottom">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar6.jpg" alt="">
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Trần Văn B</span> <small>3 giờ trước</small></p>
-                                                            <span class="">Đã kết thúc lớp học</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li class="py-2">
-                                                    <a href="javascript:void(0);" class="d-flex">
-                                                        <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/xs/avatar7.jpg" alt="">
-                                                        <div class="flex-fill ms-2">
-                                                            <p class="d-flex justify-content-between mb-0 "><span class="font-weight-bold">Lê Thị A</span> <small class="">1 ngày trước</small></p>
-                                                            <span class="">Đã kết thúc lớp học</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4">
+
+            <!-- Body: Header -->
+            <div class="header">
+                <nav class="navbar py-4">
+                    <div class="container-xxl">
+
+                        <!-- header rightbar icon -->
+                        <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+
+                             
+                            <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
+                                <div class="u-info me-2">
+                                    <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold"> <%=nguoiDungHienTai.getNguoidung_hoten() %> </span></p>
+                                    <small> <%=nguoiDungHienTai.getNguoidung_vaitro()%> </small>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
-                            <div class="u-info me-2">
-                                <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">Tên quản trị viên</span></p>
-                                <small>Hồ sơ quản trị viên</small>
-                            </div>
-                            <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-                                <img class="avatar lg rounded-circle img-thumbnail" src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png" alt="profile">
-                            </a>
-                            <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
-                                <div class="card border-0 w280">
-                                    <div class="card-body pb-0">
-                                        <div class="d-flex py-1">
-                                            <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png" alt="profile">
-                                            <div class="flex-fill ms-3">
-                                                <p class="mb-0"><span class="font-weight-bold">Vũ Cao X</span></p>
-                                                <small class="">VuCaoX@gmail.com</small>
+                                <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button"
+                                    data-bs-toggle="dropdown" data-bs-display="static">
+                                    <img class="avatar lg rounded-circle img-thumbnail"
+                                        src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png" alt="profile">
+                                </a>
+                                <div
+                                    class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
+                                    <div class="card border-0 w280">
+                                        <div class="card-body pb-0">
+                                            <div class="d-flex py-1">
+                                                <img class="avatar rounded-circle" src="${pageContext.request.contextPath}/dist/assets/images/profile_av.png"
+                                                    alt="profile">
+                                                <div class="flex-fill ms-3">
+                                                    <p class="mb-0"><span class="font-weight-bold"><%=nguoiDungHienTai.getNguoidung_hoten() %></span>
+                                                    </p>
+                                                    <small class=""><%=nguoiDungHienTai.getNguoidung_email() %></small>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <hr class="dropdown-divider border-dark">
                                             </div>
                                         </div>
-                                        
-                                        <div><hr class="dropdown-divider border-dark"></div>
-                                    </div>
-                                    <div class="list-group m-2 ">
-                                        <a href="task.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-tasks fs-5 me-3"></i>Công việc của tôi</a>
-                                        <a href="members.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-ui-user-group fs-6 me-3"></i>Thành viên</a>
-                                        <a href="ui-elements/auth-signin.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-logout fs-6 me-3"></i>Đăng xuất</a>
-                                        <div><hr class="dropdown-divider border-dark"></div>
+                                        <div class="list-group m-2 ">
+                                            <a href="${pageContext.request.contextPath}/Dashboard"
+                                                class="list-group-item list-group-item-action border-0 "><i
+                                                    class="icofont-tasks fs-5 me-3"></i>Quản lý</a>
+                                             
+                                            <a href="${pageContext.request.contextPath}/signin"
+                                                class="list-group-item list-group-item-action border-0 "><i
+                                                    class="icofont-logout fs-6 me-3"></i>Đăng xuất</a>
+                                            <!--  <div>
+                                                <hr class="dropdown-divider border-dark">
+                                            </div>
+                                            <a href="ui-elements/auth-signup.html"
+                                                class="list-group-item list-group-item-action border-0 "><i
+                                                    class="icofont-contact-add fs-5 me-3"></i>Thêm tài khoản</a>-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-    
-                    <!-- menu toggler -->
-                    <button class="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
-                        <span class="fa fa-bars"></span>
-                    </button>
-    
-                    <!-- main menu Search-->
-                    <div class="order-0 col-lg-4 col-md-4 col-sm-12 col-12 mb-3 mb-md-0 ">
-                        <div class="input-group flex-nowrap input-group-lg">
-                            <button type="button" class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></button>
-                            <input type="search" class="form-control" placeholder="Tìm kiếm" aria-label="search" aria-describedby="addon-wrapping">
-                            <button type="button" class="input-group-text add-member-top" id="addon-wrappingone" data-bs-toggle="modal" data-bs-target="#addUser"><i class="fa fa-plus"></i></button>
+
+                        <!-- menu toggler -->
+                        <button class="navbar-toggler p-0 border-0 menu-toggle order-3" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#mainHeader">
+                            <span class="fa fa-bars"></span>
+                        </button>
+
+                        <!-- main menu Search-->
+                        <div class="order-0 col-lg-4 col-md-4 col-sm-12 col-12 mb-3 mb-md-0 ">
+                            <div class="input-group flex-nowrap input-group-lg">
+                                <button type="button" class="input-group-text" id="addon-wrapping"><i
+                                        class="fa fa-search"></i></button>
+                                <input type="search" class="form-control" placeholder="Search" aria-label="search"
+                                    aria-describedby="addon-wrapping">
+                                <button type="button" class="input-group-text add-member-top" id="addon-wrappingone"
+                                    data-bs-toggle="modal" data-bs-target="#addUser"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
+
                     </div>
-    
-                </div>
-            </nav>
-        </div>
+                </nav>
+            </div>
+            <!-- end main body area -->
 
         <!-- Body: Body -->
         <div class="body d-flex py-lg-3 py-md-2">

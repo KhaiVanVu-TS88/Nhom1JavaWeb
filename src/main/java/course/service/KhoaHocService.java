@@ -22,7 +22,7 @@ public class KhoaHocService {
 
 	public boolean insertKhoaHoc(String khoahoc_ten, String khoahoc_mota, String khoahoc_trinhdo, String khoahoc_loai,
 			LocalDate khoahoc_ngaybatdau, LocalDate khoahoc_ngayketthuc, int khoahoc_thoiluong,
-			BigDecimal khoahoc_gia) {
+			int khoahoc_gia) {
 		return khoaHocRepository.insertKhoaHoc(khoahoc_ten, khoahoc_mota, khoahoc_trinhdo, khoahoc_loai,
 				khoahoc_ngaybatdau, khoahoc_ngayketthuc, khoahoc_thoiluong, khoahoc_gia) > 0 ? true : false;
 	}
